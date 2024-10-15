@@ -6,6 +6,7 @@ import jakarta.validation.constraints.*;
 
 import java.time.LocalDate;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -34,4 +35,7 @@ public class Cyclist {
 
     @ManyToMany(mappedBy = "cyclists")
     private Set<Competition> competitions = new HashSet<>();
+
+    @OneToMany(mappedBy = "cyclists")
+    private List<StageResult> stageResults;
 }

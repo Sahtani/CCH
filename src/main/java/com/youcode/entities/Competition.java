@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -31,6 +32,9 @@ public class Competition {
 
     @Column(name = "distance", nullable = false)
     private double distance;
+
+    @OneToMany(mappedBy = "competition", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Stage> stages;
 
     @ManyToMany
     @JoinTable(
