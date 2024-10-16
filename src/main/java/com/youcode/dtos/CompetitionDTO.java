@@ -1,4 +1,4 @@
-package com.youcode.dto;
+package com.youcode.dtos;
 
 public class CompetitionDTO {
 }
