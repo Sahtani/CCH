@@ -1,25 +1,20 @@
 package com.youcode.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-@Data
+@Setter
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name = "competitions")
-public class Competition {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Competition extends BaseEntity {
 
     @Column(name = "name", nullable = false)
     private String name;

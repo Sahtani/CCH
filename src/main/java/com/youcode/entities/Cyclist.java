@@ -11,14 +11,12 @@ import java.util.Set;
 
 @Entity
 @Table(name = "cyclists")
-@Data
+@Setter
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Cyclist {
+public class Cyclist extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
     @NotNull
     private String firstName;
     @NotNull

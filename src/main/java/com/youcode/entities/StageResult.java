@@ -5,18 +5,16 @@ import com.youcode.embedded.StageResultId;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.Duration;
 
 @Entity
 @Table(name = "stage_results")
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class StageResult {
 
     @EmbeddedId
