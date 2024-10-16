@@ -28,8 +28,9 @@ public class Cyclist extends BaseEntity {
     @Column(name = "nationality")
     private String nationality;
     @NotBlank
-    @Column(name = "team")
-    private String team;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "team_id")
+    private Team team;
 
     @ManyToMany(mappedBy = "cyclists")
     private Set<Competition> competitions = new HashSet<>();
