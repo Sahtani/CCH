@@ -1,33 +1,65 @@
 package com.youcode.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import com.zaxxer.hikari.HikariDataSource;
+import jakarta.persistence.EntityManagerFactory;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.orm.jpa.JpaTransactionManager;
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
+import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
 import java.util.Properties;
 
 @Configuration
+@EnableJpaRepositories(basePackages = "com.youcode.repositories") // Ensure this points to the correct package
+@ComponentScan("com.youcode") // Scan all components within com.youcode
 @EnableTransactionManagement
 public class HibernateConfig {
 
-    @Autowired
-    private DataSource dataSource;
+    @Bean
+    public DataSource dataSource() {
+        HikariDataSource ds = new HikariDataSource();
+        ds.setJdbcUrl("jdbc:postgresql://localhost:5432/CCH");
+        ds.setUsername("postgres");
+        ds.setPassword("soumia");
+        ds.setDriverClassName("org.postgresql.Driver");
+        ds.setAutoCommit(true); // Optional: Set autocommit mode
+        ds.setTransactionIsolation("TRANSACTION_READ_COMMITTED");
+        return ds;
+    }
 
-    @Bean(name = "sessionFactory")
-    public LocalSessionFactoryBean sessionFactory() {
-        LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
-        sessionFactory.setDataSource(dataSource);
-        sessionFactory.setPackagesToScan("com.yourpackage.entities");
+    @Bean
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
+        HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
+        vendorAdapter.setGenerateDdl(true); // Auto-generate schema
 
-        Properties hibernateProperties = new Properties();
-        hibernateProperties.put("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
-        hibernateProperties.put("hibernate.show_sql", "true");
-        hibernateProperties.put("hibernate.hbm2ddl.auto", "update");
+        LocalContainerEntityManagerFactoryBean factoryBean = new LocalContainerEntityManagerFactoryBean();
+        factoryBean.setJpaVendorAdapter(vendorAdapter);
+        factoryBean.setDataSource(dataSource());
 
-        sessionFactory.setHibernateProperties(hibernateProperties);
-        return sessionFactory;
+        // Ensure correct entity package is scanned
+        factoryBean.setPackagesToScan("com.youcode.entities");
+
+        // Additional properties
+        Properties jpaProperties = new Properties();
+        jpaProperties.put("hibernate.hbm2ddl.auto", "update");
+        jpaProperties.put("hibernate.show_sql", "true");
+        jpaProperties.put("hibernate.format_sql", "true");
+        jpaProperties.put("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
+
+        factoryBean.setJpaProperties(jpaProperties);
+        return factoryBean;
+    }
+
+    @Bean
+    public PlatformTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
+        JpaTransactionManager tx = new JpaTransactionManager();
+        tx.setEntityManagerFactory(entityManagerFactory);
+        return tx;
     }
 }

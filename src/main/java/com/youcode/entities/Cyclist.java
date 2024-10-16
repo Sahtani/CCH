@@ -34,6 +34,6 @@ public class Cyclist extends BaseEntity {
     @ManyToMany(mappedBy = "cyclists")
     private Set<Competition> competitions = new HashSet<>();
 
-    @OneToMany(mappedBy = "cyclists")
+    @OneToMany(mappedBy = "cyclist")
     private List<StageResult> stageResults;
 }
