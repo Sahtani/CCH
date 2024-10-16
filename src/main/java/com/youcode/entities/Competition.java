@@ -31,11 +31,6 @@ public class Competition extends BaseEntity {
     @OneToMany(mappedBy = "competition", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Stage> stages;
 
-    @ManyToMany
-    @JoinTable(
-            name = "GeneralResult",
-            joinColumns = @JoinColumn(name = "competition_id"),
-            inverseJoinColumns = @JoinColumn(name = "cyclist_id")
-    )
-    private Set<Cyclist> cyclists = new HashSet<>();
+    @OneToMany(mappedBy = "competition")
+    private List<GeneralResult> generalResults;
 }

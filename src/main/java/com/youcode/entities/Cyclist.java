@@ -27,6 +27,7 @@ public class Cyclist extends BaseEntity {
     @NotNull
     @Column(name = "nationality")
     private String nationality;
+
     @NotBlank
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "team_id")
@@ -37,4 +38,6 @@ public class Cyclist extends BaseEntity {
 
     @OneToMany(mappedBy = "cyclist")
     private List<StageResult> stageResults;
+    @OneToMany(mappedBy = "cyclist")
+    private List<GeneralResult> generalResults;
 }
