@@ -1,4 +1,4 @@
-package com.youcode.services.interfaces;
+package com.youcode.services.api;
 
 import com.youcode.entities.Competition;
 import com.youcode.entities.Cyclist;

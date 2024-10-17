@@ -1,4 +1,4 @@
-package com.youcode.services.interfaces;
+package com.youcode.services.api;
 
 import java.util.List;
 import java.util.Optional;

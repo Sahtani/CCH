@@ -1,8 +1,6 @@
-package com.youcode.services.interfaces;
+package com.youcode.services.api;
 
 import com.youcode.entities.Cyclist;
-
-import java.util.List;
 
 public interface CyclistService extends GenericService<Cyclist,Long> {
 

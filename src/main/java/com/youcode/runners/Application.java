@@ -1,7 +1,7 @@
 package com.youcode.runners;
 
 import com.youcode.entities.Cyclist;
-import com.youcode.services.interfaces.CyclistService;
+import com.youcode.services.api.CyclistService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import com.youcode.config.HibernateConfig;

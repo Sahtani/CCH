@@ -2,7 +2,7 @@ package com.youcode.services.implementations;
 
 import com.youcode.entities.Cyclist;
 import com.youcode.repositories.CyclistRepository;
-import com.youcode.services.interfaces.CyclistService;
+import com.youcode.services.api.CyclistService;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
