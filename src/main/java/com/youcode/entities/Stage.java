@@ -1,10 +1,12 @@
 package com.youcode.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -18,10 +20,10 @@ public class Stage extends BaseEntity {
     @Positive
     @Column(nullable = false)
     private int number;
-
+    @NotBlank
     @Column(name = "start_location", nullable = false)
     private String startLocation;
-
+    @NotBlank
     @Column(name = "end_location", nullable = false)
     private String endLocation;
 
@@ -36,5 +38,5 @@ public class Stage extends BaseEntity {
     private Competition competition;
 
     @OneToMany(mappedBy = "stage", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<StageResult> stageResults;
+    private List<StageResult> stageResults = new ArrayList<>();
 }

@@ -16,7 +16,7 @@ import javax.sql.DataSource;
 import java.util.Properties;
 
 @Configuration
-@EnableJpaRepositories(basePackages = "com.youcode.repositories") // Ensure this points to the correct package
+@EnableJpaRepositories(basePackages = "com.youcode.repositories")
 @ComponentScan("com.youcode") // Scan all components within com.youcode
 @EnableTransactionManagement
 public class HibernateConfig {

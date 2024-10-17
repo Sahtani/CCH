@@ -1,9 +1,12 @@
 package com.youcode.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -16,21 +19,18 @@ import java.util.Set;
 @Table(name = "competitions")
 public class Competition extends BaseEntity {
 
-    @Column(name = "name", nullable = false)
-    private String name;
+    @NotBlank
+    private Integer year;
 
-    @Column(name = "date", nullable = false)
-    private LocalDate date;
+    @NotBlank
+    private LocalDate startDate;
 
-    @Column(name = "location", nullable = false)
-    private String location;
+    @NotBlank
+    private LocalDate endDate;
 
-    @Column(name = "distance", nullable = false)
-    private double distance;
+    @OneToMany(mappedBy = "competition", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
+    private List<Stage> stages = new ArrayList<>();
 
     @OneToMany(mappedBy = "competition", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Stage> stages;
-
-    @OneToMany(mappedBy = "competition")
     private List<GeneralResult> generalResults;
 }

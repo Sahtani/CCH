@@ -1,13 +1,14 @@
 package com.youcode.services.interfaces;
 
+import com.youcode.entities.Competition;
 import com.youcode.entities.Cyclist;
 
 import java.util.List;
 
-public interface ICyclistService {
-    List<Cyclist> getAllCyclists();
+public interface ICompetitionService {
+    List<Competition> getAll();
 
-    Cyclist getCyclistById(Long id);
+    Competition getById(Long id);
 
     Cyclist saveCyclist(Cyclist cyclist);
 

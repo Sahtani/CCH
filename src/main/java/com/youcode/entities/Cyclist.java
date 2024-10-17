@@ -4,10 +4,8 @@ import jakarta.persistence.*;
 import lombok.*;
 import jakarta.validation.constraints.*;
 
-import java.time.LocalDate;
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "cyclists")
@@ -17,14 +15,17 @@ import java.util.Set;
 @AllArgsConstructor
 public class Cyclist extends BaseEntity {
 
-    @NotNull
+    @NotBlank
     private String firstName;
-    @NotNull
+
+    @NotBlank
     private String lastName;
+
     @NotNull
-    @Column(name = "dateBirth")
-    private LocalDate dateBirth;
-    @NotNull
+    @Positive
+    private Integer age;
+
+    @NotBlank
     @Column(name = "nationality")
     private String nationality;
 
@@ -33,11 +34,9 @@ public class Cyclist extends BaseEntity {
     @JoinColumn(name = "team_id")
     private Team team;
 
-    @ManyToMany(mappedBy = "cyclists")
-    private Set<Competition> competitions = new HashSet<>();
+    @OneToMany(mappedBy = "cyclist",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<StageResult> stageResults = new ArrayList<>();
 
-    @OneToMany(mappedBy = "cyclist")
-    private List<StageResult> stageResults;
-    @OneToMany(mappedBy = "cyclist")
-    private List<GeneralResult> generalResults;
+    @OneToMany(mappedBy = "cyclist", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<GeneralResult> generalResults = new ArrayList<>();
 }

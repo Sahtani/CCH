@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.Duration;
 import java.time.LocalTime;
 
 @Entity
@@ -28,7 +29,7 @@ public class GeneralResult {
     @MapsId("cyclistId")
     private Cyclist cyclist;
 
-    private LocalTime generalTime;
+    private Duration generalTime;
     private String generalRange;
 
 }
