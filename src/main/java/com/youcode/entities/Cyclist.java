@@ -26,12 +26,10 @@ public class Cyclist extends BaseEntity {
     private Integer age;
 
     @NotBlank
-    @Column(name = "nationality")
     private String nationality;
 
-    @NotBlank
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "team_id")
     private Team team;
 
     @OneToMany(mappedBy = "cyclist",cascade = CascadeType.ALL, fetch = FetchType.EAGER)

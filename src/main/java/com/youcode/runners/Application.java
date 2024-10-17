@@ -17,13 +17,13 @@ public class Application {
 
 
         Cyclist newCyclist = new Cyclist();
-        newCyclist.setFirstName("John");
+        newCyclist.setFirstName("soumia");
         newCyclist.setLastName("Doe");
-        newCyclist.setDateBirth(LocalDate.of(1990, 5, 15));
+        newCyclist.setAge(15);
         newCyclist.setNationality("American");
 
 
-        Cyclist savedCyclist = cyclistService.saveCyclist(newCyclist);
+        Cyclist savedCyclist = cyclistService.save(newCyclist);
 
 
         System.out.println("New cyclist created: " + savedCyclist);

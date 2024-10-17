@@ -21,10 +21,8 @@ public class Stage extends BaseEntity {
     @Column(nullable = false)
     private int number;
     @NotBlank
-    @Column(name = "start_location", nullable = false)
     private String startLocation;
     @NotBlank
-    @Column(name = "end_location", nullable = false)
     private String endLocation;
 
     @Column(nullable = false)
@@ -34,7 +32,6 @@ public class Stage extends BaseEntity {
     private String type;
 
     @ManyToOne
-    @JoinColumn(name = "competition_id", nullable = false)
     private Competition competition;
 
     @OneToMany(mappedBy = "stage", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
