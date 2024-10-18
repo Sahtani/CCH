@@ -19,7 +19,7 @@ import java.util.Properties;
 @EnableJpaRepositories(basePackages = "com.youcode.repositories")
 @ComponentScan("com.youcode") // Scan all components within com.youcode
 @EnableTransactionManagement
-public class HibernateConfig {
+public class AppConfig {
 
     @Bean
     public DataSource dataSource() {
