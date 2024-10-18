@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
-public class TeamServiceImpl implements TeamService{
+public class TeamServiceImpl implements TeamService {
 
     private final TeamRepository teamRepository;
 
@@ -19,16 +19,17 @@ public class TeamServiceImpl implements TeamService{
 
     @Override
     public List<Team> getAll() {
-        return List.of();
+        return teamRepository.findAll();
     }
 
     @Override
-    public Optional<Team> getById(Long aLong) {
-        return Optional.empty();
+    public Optional<Team> getById(Long id) {
+        return Optional.ofNullable(teamRepository.findById(id).orElse(null));
     }
 
     @Override
-    public void delete(Long aLong) {
+    public void delete(Long id) {
+        teamRepository.deleteById(id);
 
     }
     @Override

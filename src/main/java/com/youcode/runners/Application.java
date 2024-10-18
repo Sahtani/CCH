@@ -15,8 +15,6 @@ public class Application {
 //      save Cyclist :
 //
 //        CyclistService cyclistService = context.getBean(CyclistService.class);
-//
-//
 //        Cyclist newCyclist = new Cyclist();
 //        newCyclist.setFirstName("soumia");
 //        newCyclist.setLastName("Doe");
