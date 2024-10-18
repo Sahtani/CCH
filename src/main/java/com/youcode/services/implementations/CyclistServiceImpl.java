@@ -6,6 +6,8 @@ import com.youcode.services.api.CyclistService;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,7 +16,7 @@ import java.util.Optional;
 public class CyclistServiceImpl implements CyclistService {
 
     private final CyclistRepository cyclistRepository;
-
+    private List<Cyclist> cyclists;
     public CyclistServiceImpl(CyclistRepository cyclistRepository) {
         this.cyclistRepository = cyclistRepository;
     }
@@ -46,4 +48,22 @@ public class CyclistServiceImpl implements CyclistService {
     public void delete(Long id) {
         cyclistRepository.deleteById(id);
     }
+    public List<Cyclist> getCyclistsSortedByName() {
+        List<Cyclist> cyclists = cyclistRepository.findAll();
+        List<Cyclist> sortedCyclists = new ArrayList<>(cyclists);
+        sortedCyclists.sort(Comparator.comparing(Cyclist::getLastName));
+        return sortedCyclists;
+    }
+
+    public List<Cyclist> getCyclistsSortedByNationality() {
+        List<Cyclist> sortedCyclists = new ArrayList<>(cyclists);
+        sortedCyclists.sort(Comparator.comparing(Cyclist::getNationality));
+        return sortedCyclists;
+    }
+
+//    public List<Cyclist> getCyclistsSortedByTeam() {
+//        List<Cyclist> sortedCyclists = new ArrayList<>(cyclists);
+//        sortedCyclists.sort(Comparator.comparing(Cyclist::getTeam));
+//        return sortedCyclists;
+//    }
 }
