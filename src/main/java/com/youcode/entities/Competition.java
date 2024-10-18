@@ -21,6 +21,8 @@ public class Competition extends BaseEntity {
 
     @NotBlank
     private Integer year;
+    @NotBlank
+    private String location;
 
     @NotBlank
     private LocalDate startDate;
