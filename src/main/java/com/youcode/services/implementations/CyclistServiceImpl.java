@@ -34,6 +34,14 @@ public class CyclistServiceImpl implements CyclistService {
         return cyclistRepository.save(cyclist);
     }
 
+    public Cyclist update(Cyclist cyclist) {
+
+        if (!cyclistRepository.existsById(cyclist.getId())) {
+            throw new IllegalArgumentException("Cyclist not found.");
+        }
+        return cyclistRepository.save(cyclist);
+    }
+
     @Override
     public void delete(Long id) {
         cyclistRepository.deleteById(id);
