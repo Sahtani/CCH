@@ -11,8 +11,8 @@ import com.youcode.config.AppConfig;
 
 public class Application {
     public static void main(String[] args) {
-//        ApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
-//
+       ApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
+//      save Cyclist :
 //
 //        CyclistService cyclistService = context.getBean(CyclistService.class);
 //
@@ -31,10 +31,10 @@ public class Application {
 //
 //
 //        ((AnnotationConfigApplicationContext) context).close();
-        ApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
+        //save team
         TeamService teamService = context.getBean(TeamService.class);
         Team team = new Team();
-        team.setName("Team 1");
+        team.setName("Team 3 ");
         teamService.save(team);
         System.out.println("Team saved");
 

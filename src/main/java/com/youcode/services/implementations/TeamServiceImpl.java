@@ -33,9 +33,13 @@ public class TeamServiceImpl implements TeamService{
     }
     @Override
     public Team save(Team team) {
+        if (team.getName() == null || team.getName().isEmpty()) {
+            throw new IllegalArgumentException("Team name cannot be empty.");
+        }
         if (teamRepository.existsByName(team.getName())) {
             throw new IllegalArgumentException("Team with the same name already exists.");
         }
         return teamRepository.save(team);
     }
+
 }

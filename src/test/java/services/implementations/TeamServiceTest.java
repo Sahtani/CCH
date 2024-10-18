@@ -41,7 +41,7 @@ class TeamServiceTest {
     }
     @Test
     public void testAddTeamWithDuplicateName() {
-        // Scénario 2 : Équipe avec un nom déjà existant
+
         Team team = new Team();
         team.setName("Team A");
         when(teamRepository.existsByName("Team A")).thenReturn(true);
@@ -56,9 +56,9 @@ class TeamServiceTest {
 
     @Test
     public void testAddTeamWithEmptyName() {
-        // Scénario 3 : Nom vide ou null
+
         Team team = new Team();
-        team.setName("");  // ou `null`
+        team.setName("");
 
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             teamService.save(team);
@@ -70,7 +70,7 @@ class TeamServiceTest {
 
     @Test
     public void testAddTeamWhenDatabaseFails() {
-        // Scénario 4 : Erreur de sauvegarde (ex. : DB non disponible)
+
         Team team = new Team();
         team.setName("Team A");
         when(teamRepository.save(any(Team.class))).thenThrow(new RuntimeException("Database error"));
