@@ -1,6 +1,7 @@
 package com.youcode.services.implementations;
 
 import com.youcode.entities.Competition;
+import com.youcode.entities.Cyclist;
 import com.youcode.repositories.CompetitionRepository;
 import com.youcode.services.api.CompetitionService;
 
@@ -33,4 +34,12 @@ public class CompetitionServiceImpl implements CompetitionService {
     public void delete(Long id) {
         competitionRepository.deleteById(id);
     }
+    public Competition update(Competition competition) {
+
+        if (!competitionRepository.existsById(competition.getId())) {
+            throw new IllegalArgumentException("Competition not found.");
+        }
+        return competitionRepository.save(competition);
+    }
+
 }

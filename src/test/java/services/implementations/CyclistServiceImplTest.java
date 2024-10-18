@@ -16,7 +16,7 @@ import org.mockito.MockitoAnnotations;
 import java.util.ArrayList;
 import java.util.List;
 
-class CyclistServiceTest {
+class CyclistServiceImplTest {
 
     @Mock
     private CyclistRepository cyclistRepository;
