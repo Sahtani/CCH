@@ -5,8 +5,11 @@ import com.youcode.entities.Cyclist;
 import com.youcode.repositories.CompetitionRepository;
 import com.youcode.services.api.CompetitionService;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class CompetitionServiceImpl implements CompetitionService {
     private CompetitionRepository competitionRepository;
@@ -41,5 +44,24 @@ public class CompetitionServiceImpl implements CompetitionService {
         }
         return competitionRepository.save(competition);
     }
+    @Override
+    public List<Competition> getCompetitionsFiltered(LocalDate date, String location) {
+        List<Competition> filteredCompetitions = new ArrayList<>(competitionRepository.findAll());
+
+        if (date != null) {
+            filteredCompetitions = filteredCompetitions.stream()
+                    .filter(comp -> comp.getStartDate().isEqual(date))
+                    .collect(Collectors.toList());
+        }
+
+        if (location != null && !location.isEmpty()) {
+            filteredCompetitions = filteredCompetitions.stream()
+                    .filter(comp -> comp.getLocation().equalsIgnoreCase(location))
+                    .collect(Collectors.toList());
+        }
+
+        return filteredCompetitions;
+    }
+
 
 }
