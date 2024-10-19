@@ -7,9 +7,7 @@ import lombok.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Setter
 @Getter
@@ -19,15 +17,17 @@ import java.util.Set;
 @Table(name = "competitions")
 public class Competition extends BaseEntity {
 
-    @NotBlank
+    @NotNull
+    private String name;
+    @NotNull
     private Integer year;
     @NotBlank
     private String location;
 
-    @NotBlank
+    @NotNull
     private LocalDate startDate;
 
-    @NotBlank
+    @NotNull
     private LocalDate endDate;
 
     @OneToMany(mappedBy = "competition", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)

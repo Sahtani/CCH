@@ -4,13 +4,14 @@ import com.youcode.entities.Competition;
 import com.youcode.entities.Cyclist;
 import com.youcode.repositories.CompetitionRepository;
 import com.youcode.services.api.CompetitionService;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
+@Service
 public class CompetitionServiceImpl implements CompetitionService {
     private CompetitionRepository competitionRepository;
 

@@ -4,6 +4,7 @@ import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 import com.youcode.entities.Competition;
+import com.youcode.entities.Cyclist;
 import com.youcode.repositories.CompetitionRepository;
 import com.youcode.services.implementations.CompetitionServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,6 +28,12 @@ public class CompetitionServiceImplTest {
         MockitoAnnotations.openMocks(this);
         competition = new Competition();
         competition.setId(1L);
+     Cyclist   cyclist = new Cyclist();
+        cyclist.setId(1L);
+        cyclist.setFirstName("Soumia");
+        cyclist.setLastName("Sahtani");
+        cyclist.setAge(25);
+        cyclist.setNationality("Morocco");
     }
 
     @Test
