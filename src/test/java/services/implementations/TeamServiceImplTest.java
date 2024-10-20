@@ -1,5 +1,7 @@
 package services.implementations;
 
+import com.youcode.dtos.request.TeamRequestDTO;
+import com.youcode.dtos.response.TeamResponseDTO;
 import com.youcode.entities.Team;
 import com.youcode.repositories.TeamRepository;
 import com.youcode.services.implementations.TeamServiceImpl;
@@ -27,18 +29,23 @@ class TeamServiceImplTest {
 
     @Test
     void testAddTeamSuccessfully() {
-        Team team = new Team();
-        team.setName("Team A");
+        // Arrange
+        TeamRequestDTO teamRequest = new TeamRequestDTO("Team A");
+        Team teamEntity = new Team();
+        teamEntity.setName("Team A");
 
         when(teamRepository.existsByName("Team A")).thenReturn(false);
-        when(teamRepository.save(team)).thenReturn(team);
+        when(teamRepository.save(any(Team.class))).thenReturn(teamEntity);
 
-        Team result = teamService.save(team);
+        // Act
+        TeamResponseDTO result = teamService.save(teamRequest);
 
+        // Assert
         assertNotNull(result);
-        assertEquals("Team A", result.getName());
-        verify(teamRepository).save(team);
+        assertEquals("Team A", result.getClass().getName());
+        verify(teamRepository).save(any(Team.class));
     }
+
     @Test
     public void testAddTeamWithDuplicateName() {
 

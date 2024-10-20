@@ -47,7 +47,7 @@ GeneralResultServiceImpl generalResultService;
 
         cyclist = new Cyclist();
         cyclist.setId(1L); // Assuming IDs are Long
-        cyclist.setFirstName("John Doe");
+        cyclist.setName("John Doe");
     }
 //
 //    @Test

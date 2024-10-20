@@ -5,15 +5,13 @@ import com.youcode.dtos.response.GeneralResultResponseDTO;
 import com.youcode.entities.Competition;
 import com.youcode.entities.Cyclist;
 import com.youcode.entities.GeneralResult;
+import com.youcode.mappers.GeneralResultMapper;
 import com.youcode.repositories.CompetitionRepository;
 import com.youcode.repositories.CyclistRepository;
 import com.youcode.repositories.GeneralResultRepository;
 import com.youcode.services.api.GeneralResultService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Optional;
 @Service
 public class GeneralResultServiceImpl implements GeneralResultService {
     @Autowired
@@ -22,24 +20,27 @@ public class GeneralResultServiceImpl implements GeneralResultService {
     private CompetitionRepository competitionRepository;
     @Autowired
     private CyclistRepository cyclistRepository;
+    private final GeneralResultMapper generalResultMapper;
 
-
+    public GeneralResultServiceImpl(GeneralResultMapper generalResultMapper) {
+        this.generalResultMapper = generalResultMapper;
+    }
 
     @Override
     public GeneralResultResponseDTO subscribeToCompetition(GeneralResultRequestDTO dto) {
-        Competition competition = competitionRepository.findById(competitionId)
-                .orElseThrow(() -> new IllegalArgumentException("Competition not found."));
+        Cyclist cyclist = cyclistRepository.findById(dto.cyclistId())
+                .orElseThrow(() -> new IllegalArgumentException("Cyclist not found with ID: " + dto.cyclistId()));
 
-        Cyclist cyclist = cyclistRepository.findById(cyclistId)
-                .orElseThrow(() -> new IllegalArgumentException("Cyclist not found."));
+        Competition competition = competitionRepository.findById(dto.competitionId())
+                .orElseThrow(() -> new IllegalArgumentException("Competition not found with ID: " + dto.competitionId()));
 
         GeneralResult result = new GeneralResult();
         result.setCyclist(cyclist);
         result.setCompetition(competition);
         generalResultRepository.save(result);
-        return result;
+
+        return generalResultMapper.toResponseDTO(result);
     }
 
-
-
 }
+

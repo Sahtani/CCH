@@ -46,7 +46,7 @@ public class CompetitionServiceImplTest {
         cyclist.setAge(25);
         cyclist.setNationality("Morocco");
 
-        competition.add(cyclist);
+     //   competition.add(cyclist);
     }
 
     @Test

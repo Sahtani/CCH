@@ -30,19 +30,19 @@ public class CompetitionServiceImpl implements CompetitionService {
 
     @Override
     public List<CompetitionResponseDto> getAll() {
-        return competitionRepository.findAll().stream().map(competitionMapper::toDto).collect(Collectors.toList());
+        return competitionRepository.findAll().stream().map(competitionMapper::toResponseDTO).collect(Collectors.toList());
     }
     @Override
     public Optional<CompetitionResponseDto> getById(Long id) {
         Competition competition = competitionRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Competition not found."));
-        return Optional.ofNullable(competitionMapper.toDto(competition));
+        return Optional.ofNullable(competitionMapper.toResponseDTO(competition));
     }
     @Override
     public CompetitionResponseDto save(CompetitionRequestDTO dto) {
         Competition competition = competitionMapper.toEntity(dto);
         Competition savedCompetition = competitionRepository.save(competition);
-        return competitionMapper.toDto(savedCompetition);
+        return competitionMapper.toResponseDTO(savedCompetition);
     }
 
     @Override

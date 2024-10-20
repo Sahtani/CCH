@@ -30,31 +30,31 @@ public class CyclistServiceImpl implements CyclistService {
     @Override
     public List<CyclistResponseDTO> getAll() {
         return cyclistRepository.findAll().stream()
-                .map(cyclistMapper::toDto)
+                .map(cyclistMapper::toResponseDTO)
                 .collect(Collectors.toList());
     }
 
     @Override
     public Optional<CyclistResponseDTO> getById(Long id) {
         return cyclistRepository.findById(id)
-                .map(cyclistMapper::toDto);
+                .map(cyclistMapper::toResponseDTO);
     }
 
     @Override
     public CyclistResponseDTO save(CyclistRequestDTO cyclistRequestDTO) {
         Cyclist cyclist = cyclistMapper.toEntity(cyclistRequestDTO);
         Cyclist savedCyclist = cyclistRepository.save(cyclist);
-        return cyclistMapper.toDto(savedCyclist);
+        return cyclistMapper.toResponseDTO(savedCyclist);
     }
 
 
     public CyclistResponseDTO update(CyclistRequestDTO cyclistRequestDTO) {
-        if (!cyclistRepository.existsById(cyclistRequestDTO.id())) {
-            throw new IllegalArgumentException("Cyclist not found.");
-        }
+//        if (!cyclistRepository.existsById(cyclistRequestDTO.id)) {
+//            throw new IllegalArgumentException("Cyclist not found.");
+//        }
         Cyclist cyclist = cyclistMapper.toEntity(cyclistRequestDTO);
         Cyclist updatedCyclist = cyclistRepository.save(cyclist);
-        return cyclistMapper.toDto(updatedCyclist);
+        return cyclistMapper.toResponseDTO(updatedCyclist);
     }
 
     @Override
@@ -65,14 +65,14 @@ public class CyclistServiceImpl implements CyclistService {
     public List<CyclistResponseDTO> getCyclistsSortedByName() {
         return cyclistRepository.findAll().stream()
                 .sorted(Comparator.comparing(Cyclist::getName))
-                .map(cyclistMapper::toDto)
+                .map(cyclistMapper::toResponseDTO)
                 .collect(Collectors.toList());
     }
 
     public List<CyclistResponseDTO> getCyclistsSortedByNationality() {
         return cyclistRepository.findAll().stream()
                 .sorted(Comparator.comparing(Cyclist::getNationality))
-                .map(cyclistMapper::toDto)
+                .map(cyclistMapper::toResponseDTO)
                 .collect(Collectors.toList());
     }
 }
