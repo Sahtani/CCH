@@ -5,5 +5,5 @@ import com.youcode.dtos.response.GeneralResultResponseDTO;
 import com.youcode.entities.GeneralResult;
 
 public interface GeneralResultService  {
-  SubscribeToCompetitionResponseDto subscribeToCompetition(SubscribeToCompetitionRequestDto dto);
+  GeneralResultResponseDTO subscribeToCompetition(GeneralResultRequestDTO dto);
 }

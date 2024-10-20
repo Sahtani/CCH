@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class CompetitionMapper {
     // Convert entity to DTO
-    public CompetitionResponseDto toDto(Competition competition) {
+    public CompetitionResponseDto toResponseDTO(Competition competition) {
         return new CompetitionResponseDto(
                 competition.getId(),
                 competition.getName(),

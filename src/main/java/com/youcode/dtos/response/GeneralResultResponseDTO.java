@@ -1,9 +1,8 @@
 package com.youcode.dtos.response;
 
+import jakarta.validation.constraints.NotNull;
+
 public record GeneralResultResponseDTO(
-        Long id,
-        Long competitionId,
-        Long cyclistId,
-        String cyclistName,
-        String competitionName) {
+         CompetitionResponseDto competition,
+         CyclistResponseDTO cyclist) {
 }

@@ -16,7 +16,7 @@ public class CyclistMapper {
     }
 
     // Convert entity Cyclist to CyclistResponseDTO
-    public CyclistResponseDTO toDto(Cyclist cyclist) {
+    public CyclistResponseDTO toResponseDTO(Cyclist cyclist) {
         return new CyclistResponseDTO(
                 cyclist.getId(),
                 cyclist.getName(),

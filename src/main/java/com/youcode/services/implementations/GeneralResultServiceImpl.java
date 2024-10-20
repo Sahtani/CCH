@@ -1,5 +1,6 @@
 package com.youcode.services.implementations;
 
+import com.youcode.dtos.request.GeneralResultRequestDTO;
 import com.youcode.dtos.response.GeneralResultResponseDTO;
 import com.youcode.entities.Competition;
 import com.youcode.entities.Cyclist;
@@ -25,7 +26,7 @@ public class GeneralResultServiceImpl implements GeneralResultService {
 
 
     @Override
-    public GeneralResult save(Long competitionId, Long cyclistId) {
+    public GeneralResultResponseDTO subscribeToCompetition(GeneralResultRequestDTO dto) {
         Competition competition = competitionRepository.findById(competitionId)
                 .orElseThrow(() -> new IllegalArgumentException("Competition not found."));
 
