@@ -1,5 +1,6 @@
 package com.youcode.services.implementations;
 
+import com.youcode.dtos.response.GeneralResultResponseDTO;
 import com.youcode.entities.Competition;
 import com.youcode.entities.Cyclist;
 import com.youcode.entities.GeneralResult;
@@ -21,15 +22,7 @@ public class GeneralResultServiceImpl implements GeneralResultService {
     @Autowired
     private CyclistRepository cyclistRepository;
 
-    @Override
-    public List<GeneralResult> getAll() {
-        return List.of();
-    }
 
-    @Override
-    public Object getById(Long aLong) {
-        return Optional.empty();
-    }
 
     @Override
     public GeneralResult save(Long competitionId, Long cyclistId) {
@@ -46,12 +39,6 @@ public class GeneralResultServiceImpl implements GeneralResultService {
         return result;
     }
 
-    @Override
-    public void delete(Long aLong) {
 
-    }
-    @Override
-    public GeneralResult save(GeneralResult generalResult) {
-        return null;
-    }
+
 }

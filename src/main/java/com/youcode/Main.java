@@ -67,7 +67,7 @@ public class Main {
             GeneralResult result = generalResultService.save(competitionId, cyclistId);
             System.out.println("Cyclist registered successfully in the competition.");
             System.out.println("Competition: " + result.getCompetition().getName());
-            System.out.println("Cyclist: " + result.getCyclist().getFirstName() + " " + result.getCyclist().getLastName());
+            System.out.println("Cyclist: " + result.getCyclist().getName());
         } catch (IllegalArgumentException e) {
             System.err.println("Error: " + e.getMessage());
         }

@@ -2,7 +2,8 @@ package services.implementations;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
-
+import com.youcode.dtos.request.CyclistRequestDTO;
+import com.youcode.dtos.response.CyclistResponseDTO;
 import com.youcode.entities.Cyclist;
 import com.youcode.entities.Team;
 import com.youcode.repositories.CyclistRepository;
@@ -17,95 +18,91 @@ import java.util.ArrayList;
 import java.util.List;
 
 class CyclistServiceImplTest {
-
     @Mock
     private CyclistRepository cyclistRepository;
 
     @InjectMocks
     private CyclistServiceImpl cyclistService;
-    private Cyclist cyclist;
+
+    private Team team;
+    private CyclistRequestDTO cyclistRequestDTO;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        cyclist = new Cyclist();
-        cyclist.setId(1L);
-        cyclist.setFirstName("Soumia");
-        cyclist.setLastName("Sahtani");
-        cyclist.setAge(25);
-        cyclist.setNationality("Morocco");
+
+        team = new Team();
+        team.setName("Team A");
+
+        cyclistRequestDTO = new CyclistRequestDTO(
+                "Soumia sahtani",
+                25,
+                "Morocco",
+                1L
+        );
     }
 
     @Test
     void testSaveCyclistWithValidData() {
-
-        Team team = new Team();
-        team.setName("Team A");
-
-
-        cyclist.setFirstName("Soumia");
-        cyclist.setLastName("Sahtani");
-        cyclist.setAge(25);
-        cyclist.setNationality("Morocco");
+        Cyclist cyclist = new Cyclist();
+        cyclist.setId(1L);
+        cyclist.setName(cyclistRequestDTO.name());
+        cyclist.setAge(cyclistRequestDTO.age());
+        cyclist.setNationality(cyclistRequestDTO.nationality());
         cyclist.setTeam(team);
 
-        when(cyclistRepository.existsByName(cyclist.getFirstName() + " " + cyclist.getLastName())).thenReturn(false);
+        when(cyclistRepository.existsByName(cyclist.getName())).thenReturn(false);
         when(cyclistRepository.save(cyclist)).thenReturn(cyclist);
 
-        Cyclist savedCyclist = cyclistService.save(cyclist);
-
+        CyclistResponseDTO savedCyclist = cyclistService.save(cyclistRequestDTO);
         assertNotNull(savedCyclist);
-        assertEquals("Soumia", savedCyclist.getFirstName());
-        assertEquals("Sahtani", savedCyclist.getLastName());
-        assertEquals(25, savedCyclist.getAge());
-        assertEquals("Team A", savedCyclist.getTeam().getName());
+        assertEquals("Soumia sahtani", savedCyclist.name());
+        assertEquals(25, savedCyclist.age());
         verify(cyclistRepository, times(1)).save(cyclist);
     }
 
     @Test
     void testUpdateCyclistWithValidData() {
+        cyclistRequestDTO = new CyclistRequestDTO(
+                "Soumia sahtani",
+                25,
+                "Morocco",
+                1L // teamId
+        );
 
-        when(cyclistRepository.existsById(cyclist.getId())).thenReturn(true);
-        when(cyclistRepository.save(cyclist)).thenReturn(cyclist);
+        when(cyclistRepository.existsById(cyclistRequestDTO.id())).thenReturn(true);
+        when(cyclistRepository.save(any(Cyclist.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
-        // Act
-        Cyclist updatedCyclist = cyclistService.update(cyclist);
-
-        // Assert
+        CyclistResponseDTO updatedCyclist = cyclistService.update(cyclistRequestDTO);
         assertNotNull(updatedCyclist);
-        assertEquals("Soumia", updatedCyclist.getFirstName());
-        assertEquals(25, updatedCyclist.getAge());
-        verify(cyclistRepository, times(1)).save(cyclist);
+        assertEquals("Soumia", updatedCyclist.firstName());
+        assertEquals(25, updatedCyclist.age());
+        verify(cyclistRepository, times(1)).save(any(Cyclist.class));
     }
+
     @Test
     void testDeleteCyclist() {
-        // Arrange
         long cyclistId = 1L;
         when(cyclistRepository.existsById(cyclistId)).thenReturn(true);
-
-        // Act
         cyclistService.delete(cyclistId);
-
-        // Assert
         verify(cyclistRepository, times(1)).deleteById(cyclistId);
     }
 
     @Test
     void testGetAllCyclists() {
-        // Arrange
         List<Cyclist> cyclists = new ArrayList<>();
+        Cyclist cyclist = new Cyclist();
+        cyclist.setFirstName("Soumia");
+        cyclist.setLastName("Sahtani");
+        cyclist.setAge(25);
+        cyclist.setNationality("Morocco");
         cyclists.add(cyclist);
+
         when(cyclistRepository.findAll()).thenReturn(cyclists);
-
-        // Act
-        List<Cyclist> result = cyclistService.getAll();
-
-        // Assert
+        List<CyclistResponseDTO> result = cyclistService.getAll();
         assertNotNull(result);
         assertEquals(1, result.size());
-        assertEquals("Soumia", result.get(0).getFirstName());
+        assertEquals("Soumia", result.get(0).firstName());
         verify(cyclistRepository, times(1)).findAll();
     }
-
-
 }

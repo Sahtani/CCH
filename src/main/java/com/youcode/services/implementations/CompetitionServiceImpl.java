@@ -1,5 +1,6 @@
 package com.youcode.services.implementations;
 
+import com.youcode.dtos.request.CompetitionRequestDTO;
 import com.youcode.dtos.response.CompetitionResponseDto;
 import com.youcode.entities.Competition;
 import com.youcode.mappers.CompetitionMapper;
@@ -28,17 +29,17 @@ public class CompetitionServiceImpl implements CompetitionService {
     }
 
     @Override
-    public List<Competition> getAll() {
-        return competitionRepository.findAll();
+    public List<CompetitionResponseDto> getAll() {
+        return competitionRepository.findAll().stream().map(competitionMapper::toDto).collect(Collectors.toList());
     }
     @Override
-    public CompetitionResponseDto getById(Long id) {
+    public Optional<CompetitionResponseDto> getById(Long id) {
         Competition competition = competitionRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Competition not found."));
-        return competitionMapper.toDto(competition);
+        return Optional.ofNullable(competitionMapper.toDto(competition));
     }
     @Override
-    public CompetitionResponseDto save(CompetitionResponseDto dto) {
+    public CompetitionResponseDto save(CompetitionRequestDTO dto) {
         Competition competition = competitionMapper.toEntity(dto);
         Competition savedCompetition = competitionRepository.save(competition);
         return competitionMapper.toDto(savedCompetition);

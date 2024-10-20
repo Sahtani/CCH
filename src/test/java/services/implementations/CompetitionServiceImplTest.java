@@ -15,6 +15,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.time.LocalDate;
+
 public class CompetitionServiceImplTest {
 
     @InjectMocks
@@ -32,21 +34,19 @@ public class CompetitionServiceImplTest {
         // Initialize the Competition object
         competition = new Competition();
         competition.setId(1L);
-        competition.setName("Tour de France"); // Set additional attributes as needed
+        competition.setName("Tour de France");
         competition.setLocation("France");
         competition.setStartDate(LocalDate.of(2024, 7, 1));
         competition.setEndDate(LocalDate.of(2024, 7, 30));
 
-        // If you have a Cyclist in Competition, you may want to add that as well
+
         Cyclist cyclist = new Cyclist();
         cyclist.setId(1L);
-        cyclist.setFirstName("Soumia");
-        cyclist.setLastName("Sahtani");
+        cyclist.setName("Soumia");
         cyclist.setAge(25);
         cyclist.setNationality("Morocco");
 
-        // Assuming you have a method to add cyclists to competition
-        competition.addCyclist(cyclist); // Replace with the actual method to associate cyclists if needed
+        competition.add(cyclist);
     }
 
     @Test

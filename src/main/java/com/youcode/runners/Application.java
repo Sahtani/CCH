@@ -30,11 +30,11 @@ public class Application {
 //
 //        ((AnnotationConfigApplicationContext) context).close();
         //save team
-        TeamService teamService = context.getBean(TeamService.class);
-        Team team = new Team();
-        team.setName("Team 3 ");
-        teamService.save(team);
-        System.out.println("Team saved");
+//        TeamService teamService = context.getBean(TeamService.class);
+//        Team team = new Team();
+//        team.setName("Team 3 ");
+//        teamService.save(team);
+//        System.out.println("Team saved");
 
     }
 }

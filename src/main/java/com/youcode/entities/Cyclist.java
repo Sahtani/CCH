@@ -16,10 +16,7 @@ import java.util.List;
 public class Cyclist extends BaseEntity {
 
     @NotBlank
-    private String firstName;
-
-    @NotBlank
-    private String lastName;
+    private String name;
 
     @NotNull
     @Positive
