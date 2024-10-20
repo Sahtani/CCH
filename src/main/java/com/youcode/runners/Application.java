@@ -1,10 +1,5 @@
 package com.youcode.runners;
 
-import com.youcode.config.ServiceConfig;
-import com.youcode.entities.Cyclist;
-import com.youcode.entities.Team;
-import com.youcode.services.api.CyclistService;
-import com.youcode.services.api.TeamService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import com.youcode.config.AppConfig;
