@@ -27,7 +27,7 @@ public class CyclistServiceImpl implements CyclistService {
     }
 
     @Override
-    public Optional<Cyclist> getById(Long id) {
+    public Object getById(Long id) {
         return Optional.ofNullable(cyclistRepository.findById(id).orElse(null));
     }
 

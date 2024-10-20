@@ -1,11 +1,10 @@
 package com.youcode.services.api;
 
 import java.util.List;
-import java.util.Optional;
 
-public interface GenericService<T, ID> {
+public interface GenericService<T, ID ,RequestDto, ResponseDto> {
     List<T> getAll();
-    Optional<T> getById(ID id);
-    T save(T entity);
+    ResponseDto getById(ID id);
+    ResponseDto save(ResponseDto responseDto);
     void delete(ID id);
 }

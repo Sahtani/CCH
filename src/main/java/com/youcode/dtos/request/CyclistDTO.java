@@ -1,4 +1,4 @@
-package com.youcode.dtos;
+package com.youcode.dtos.request;
 
 public class CyclistDTO {
     private Long id;

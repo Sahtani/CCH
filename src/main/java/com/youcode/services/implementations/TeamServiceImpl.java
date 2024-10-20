@@ -1,10 +1,8 @@
 package com.youcode.services.implementations;
 
 import com.youcode.entities.Team;
-import com.youcode.repositories.CyclistRepository;
 import com.youcode.repositories.TeamRepository;
 import com.youcode.services.api.TeamService;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
@@ -23,7 +21,7 @@ public class TeamServiceImpl implements TeamService {
     }
 
     @Override
-    public Optional<Team> getById(Long id) {
+    public Object getById(Long id) {
         return Optional.ofNullable(teamRepository.findById(id).orElse(null));
     }
 

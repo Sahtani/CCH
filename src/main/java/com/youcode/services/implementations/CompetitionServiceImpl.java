@@ -1,10 +1,13 @@
 package com.youcode.services.implementations;
 
+import com.youcode.dtos.response.CompetitionResponseDto;
 import com.youcode.entities.Competition;
-import com.youcode.entities.Cyclist;
+import com.youcode.mappers.CompetitionMapper;
 import com.youcode.repositories.CompetitionRepository;
 import com.youcode.services.api.CompetitionService;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -12,39 +15,57 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 @Service
+@Validated
+@Transactional
 public class CompetitionServiceImpl implements CompetitionService {
-    private CompetitionRepository competitionRepository;
 
-    public CompetitionServiceImpl(CompetitionRepository competitionRepository) {
+    private CompetitionRepository competitionRepository;
+    private final CompetitionMapper competitionMapper;
+
+    public CompetitionServiceImpl(CompetitionRepository competitionRepository,CompetitionMapper competitionMapper) {
         this.competitionRepository = competitionRepository;
+        this.competitionMapper = competitionMapper;
     }
 
     @Override
     public List<Competition> getAll() {
         return competitionRepository.findAll();
     }
-
     @Override
-    public Optional<Competition> getById(Long id) {
-        return Optional.ofNullable(competitionRepository.findById(id).orElse(null));
+    public CompetitionResponseDto getById(Long id) {
+        Competition competition = competitionRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Competition not found."));
+        return competitionMapper.toDto(competition);
     }
-
     @Override
-    public Competition save(Competition entity) {
-        return competitionRepository.save(entity);
+    public CompetitionResponseDto save(CompetitionResponseDto dto) {
+        Competition competition = competitionMapper.toEntity(dto);
+        Competition savedCompetition = competitionRepository.save(competition);
+        return competitionMapper.toDto(savedCompetition);
     }
 
     @Override
     public void delete(Long id) {
         competitionRepository.deleteById(id);
     }
-    public Competition update(Competition competition) {
-
+    public CompetitionResponseDto update(Competition competition) {
         if (!competitionRepository.existsById(competition.getId())) {
             throw new IllegalArgumentException("Competition not found.");
         }
-        return competitionRepository.save(competition);
+
+        Competition updatedCompetition = competitionRepository.save(competition);
+
+        return new CompetitionResponseDto(
+                updatedCompetition.getId(),
+                updatedCompetition.getName(),
+                updatedCompetition.getLocation(),
+                updatedCompetition.getYear(),
+                updatedCompetition.getStartDate(),
+                updatedCompetition.getEndDate()
+        );
     }
+
+
     @Override
     public List<Competition> getCompetitionsFiltered(LocalDate date, String location) {
         List<Competition> filteredCompetitions = new ArrayList<>(competitionRepository.findAll());

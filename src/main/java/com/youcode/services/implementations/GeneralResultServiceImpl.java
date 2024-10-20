@@ -27,7 +27,7 @@ public class GeneralResultServiceImpl implements GeneralResultService {
     }
 
     @Override
-    public Optional<GeneralResult> getById(Long aLong) {
+    public Object getById(Long aLong) {
         return Optional.empty();
     }
 
