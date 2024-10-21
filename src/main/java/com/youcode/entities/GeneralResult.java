@@ -26,8 +26,9 @@ public class GeneralResult {
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("cyclistId")
     private Cyclist cyclist;
-
+    @Column(name = "general_time")
     private Duration generalTime;
+    @Column(name = "general_rank")
     private Integer generalRank;
 
 }

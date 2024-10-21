@@ -17,7 +17,7 @@ import java.util.Properties;
 
 @Configuration
 @EnableJpaRepositories(basePackages = "com.youcode.repositories")
-@ComponentScan("com.youcode") // Scan all components within com.youcode
+@ComponentScan("com.youcode")
 @EnableTransactionManagement
 public class AppConfig {
 
@@ -41,13 +41,10 @@ public class AppConfig {
         LocalContainerEntityManagerFactoryBean factoryBean = new LocalContainerEntityManagerFactoryBean();
         factoryBean.setJpaVendorAdapter(vendorAdapter);
         factoryBean.setDataSource(dataSource());
-
-        // Ensure correct entity package is scanned
         factoryBean.setPackagesToScan("com.youcode.entities");
 
-        // Additional properties
         Properties jpaProperties = new Properties();
-        jpaProperties.put("hibernate.hbm2ddl.auto", "update");
+        jpaProperties.put("hibernate.hbm2ddl.auto", "create");
         jpaProperties.put("hibernate.show_sql", "true");
         jpaProperties.put("hibernate.format_sql", "true");
         jpaProperties.put("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");

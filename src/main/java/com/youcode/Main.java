@@ -43,23 +43,23 @@ public class Main {
         CompetitionService competitionService = context.getBean(CompetitionService.class);
 ////
 //// Create a new CompetitionRequestDTO
-        CompetitionRequestDTO competitionDTO = new CompetitionRequestDTO(
-                "Tour de France",
-                "France",
-                2024,
-                LocalDate.of(2024, 7, 1),
-                LocalDate.of(2024, 7, 23)
-        );
-
-
-        CompetitionResponseDto savedCompetition = competitionService.save(competitionDTO);
-
-        System.out.println("Competition inserted with ID: " + savedCompetition.id());
-
+//        CompetitionRequestDTO competitionDTO = new CompetitionRequestDTO(
+//                "Tour de France",
+//                "France",
+//                2024,
+//                LocalDate.of(2024, 7, 1),
+//                LocalDate.of(2024, 7, 23)
+//        );
+//
+//
+//        CompetitionResponseDto savedCompetition = competitionService.save(competitionDTO);
+//
+//        System.out.println("Competition inserted with ID: " + savedCompetition.id());
+//
 
         GeneralResultService generalResultService = context.getBean(GeneralResultService.class);
 
-        Long cyclistId = 2L;
+        Long cyclistId = 1L;
         Long competitionId = 1L;
 
         GeneralResultRequestDTO dto = new GeneralResultRequestDTO(competitionId, cyclistId);
