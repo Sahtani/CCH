@@ -30,6 +30,6 @@ public class GeneralResult {
     private Cyclist cyclist;
 
     private Duration generalTime;
-    private String generalRange;
+    private Integer generalRank;
 
 }

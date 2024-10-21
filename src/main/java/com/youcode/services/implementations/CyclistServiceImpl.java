@@ -49,9 +49,7 @@ public class CyclistServiceImpl implements CyclistService {
 
 
     public CyclistResponseDTO update(CyclistRequestDTO cyclistRequestDTO) {
-//        if (!cyclistRepository.existsById(cyclistRequestDTO.id)) {
-//            throw new IllegalArgumentException("Cyclist not found.");
-//        }
+
         Cyclist cyclist = cyclistMapper.toEntity(cyclistRequestDTO);
         Cyclist updatedCyclist = cyclistRepository.save(cyclist);
         return cyclistMapper.toResponseDTO(updatedCyclist);

@@ -6,6 +6,7 @@ import com.youcode.dtos.request.CyclistRequestDTO;
 import com.youcode.dtos.response.CyclistResponseDTO;
 import com.youcode.entities.Cyclist;
 import com.youcode.entities.Team;
+import com.youcode.mappers.CyclistMapper;
 import com.youcode.repositories.CyclistRepository;
 import com.youcode.services.implementations.CyclistServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,16 +17,23 @@ import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 class CyclistServiceImplTest {
     @Mock
     private CyclistRepository cyclistRepository;
 
+    @Mock
+    private CyclistMapper cyclistMapper;
+
     @InjectMocks
     private CyclistServiceImpl cyclistService;
 
-    private Team team;
     private CyclistRequestDTO cyclistRequestDTO;
+    private Cyclist cyclistEntity;
+    private CyclistResponseDTO cyclistResponseDTO;
+    private List<Cyclist> cyclists;
+    private Team team;
 
     @BeforeEach
     void setUp() {
@@ -40,6 +48,11 @@ class CyclistServiceImplTest {
                 "Morocco",
                 1L
         );
+        cyclistRequestDTO = new CyclistRequestDTO(
+                "Soumia Sahtani", 25, "Morocco", 1L
+        );
+
+
     }
 
     @Test
@@ -62,22 +75,21 @@ class CyclistServiceImplTest {
     }
 
     @Test
-    void testUpdateCyclistWithValidData() {
-        cyclistRequestDTO = new CyclistRequestDTO(
-                "Soumia sahtani",
-                25,
-                "Morocco",
-                1L // teamId
-        );
+    void testUpdateCyclist() {
+        when(cyclistMapper.toEntity(cyclistRequestDTO)).thenReturn(cyclistEntity);
+        when(cyclistRepository.save(cyclistEntity)).thenReturn(cyclistEntity);
+        when(cyclistMapper.toResponseDTO(cyclistEntity)).thenReturn(cyclistResponseDTO);
 
-        when(cyclistRepository.existsById(cyclistRequestDTO.id())).thenReturn(true);
-        when(cyclistRepository.save(any(Cyclist.class))).thenAnswer(invocation -> invocation.getArgument(0));
+        CyclistResponseDTO result = cyclistService.update(cyclistRequestDTO);
 
-        CyclistResponseDTO updatedCyclist = cyclistService.update(cyclistRequestDTO);
-        assertNotNull(updatedCyclist);
-        assertEquals("Soumia", updatedCyclist.firstName());
-        assertEquals(25, updatedCyclist.age());
-        verify(cyclistRepository, times(1)).save(any(Cyclist.class));
+        assertNotNull(result);
+        assertEquals("Soumia Sahtani", result.name());
+        assertEquals(25, result.age());
+        assertEquals("Morocco", result.nationality());
+
+        verify(cyclistMapper, times(1)).toEntity(cyclistRequestDTO);
+        verify(cyclistRepository, times(1)).save(cyclistEntity);
+        verify(cyclistMapper, times(1)).toResponseDTO(cyclistEntity);
     }
 
     @Test
@@ -92,8 +104,7 @@ class CyclistServiceImplTest {
     void testGetAllCyclists() {
         List<Cyclist> cyclists = new ArrayList<>();
         Cyclist cyclist = new Cyclist();
-        cyclist.setFirstName("Soumia");
-        cyclist.setLastName("Sahtani");
+        cyclist.setName("Soumia sahtani");
         cyclist.setAge(25);
         cyclist.setNationality("Morocco");
         cyclists.add(cyclist);
@@ -102,7 +113,7 @@ class CyclistServiceImplTest {
         List<CyclistResponseDTO> result = cyclistService.getAll();
         assertNotNull(result);
         assertEquals(1, result.size());
-        assertEquals("Soumia", result.get(0).firstName());
+        assertEquals("Soumia sahtani", result.get(0).name());
         verify(cyclistRepository, times(1)).findAll();
     }
 }

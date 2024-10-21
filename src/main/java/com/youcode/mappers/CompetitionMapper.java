@@ -21,7 +21,6 @@ public class CompetitionMapper {
     // Convert DTO into entity
     public Competition toEntity(CompetitionRequestDTO dto) {
         Competition competition = new Competition();
-        competition.setId((long) dto.id());
         competition.setName(dto.name());
         competition.setLocation(dto.location());
         competition.setYear(dto.year());

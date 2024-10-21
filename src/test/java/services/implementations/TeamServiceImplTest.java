@@ -32,6 +32,7 @@ class TeamServiceImplTest {
         // Arrange
         TeamRequestDTO teamRequest = new TeamRequestDTO("Team A");
         Team teamEntity = new Team();
+        teamEntity.setId(1L);
         teamEntity.setName("Team A");
 
         when(teamRepository.existsByName("Team A")).thenReturn(false);
@@ -42,19 +43,19 @@ class TeamServiceImplTest {
 
         // Assert
         assertNotNull(result);
-        assertEquals("Team A", result.getClass().getName());
+        assertEquals("Team A", result.name());
         verify(teamRepository).save(any(Team.class));
     }
 
     @Test
-    public void testAddTeamWithDuplicateName() {
-
-        Team team = new Team();
-        team.setName("Team A");
+    void testAddTeamWithDuplicateName() {
+        // Arrange
+        TeamRequestDTO teamRequest = new TeamRequestDTO("Team A");
         when(teamRepository.existsByName("Team A")).thenReturn(true);
 
+        // Act & Assert
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            teamService.save(team);
+            teamService.save(teamRequest);
         });
 
         assertEquals("Team with the same name already exists.", exception.getMessage());
@@ -62,13 +63,13 @@ class TeamServiceImplTest {
     }
 
     @Test
-    public void testAddTeamWithEmptyName() {
+    void testAddTeamWithEmptyName() {
+        // Arrange
+        TeamRequestDTO teamRequest = new TeamRequestDTO("");
 
-        Team team = new Team();
-        team.setName("");
-
+        // Act & Assert
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            teamService.save(team);
+            teamService.save(teamRequest);
         });
 
         assertEquals("Team name cannot be empty.", exception.getMessage());
@@ -76,17 +77,18 @@ class TeamServiceImplTest {
     }
 
     @Test
-    public void testAddTeamWhenDatabaseFails() {
-
-        Team team = new Team();
-        team.setName("Team A");
+    void testAddTeamWhenDatabaseFails() {
+        // Arrange
+        TeamRequestDTO teamRequest = new TeamRequestDTO("Team A");
+        when(teamRepository.existsByName("Team A")).thenReturn(false);
         when(teamRepository.save(any(Team.class))).thenThrow(new RuntimeException("Database error"));
 
+        // Act & Assert
         Exception exception = assertThrows(RuntimeException.class, () -> {
-            teamService.save(team);
+            teamService.save(teamRequest);
         });
 
         assertEquals("Database error", exception.getMessage());
-        verify(teamRepository, times(1)).save(team);
+        verify(teamRepository, times(1)).save(any(Team.class));
     }
 }

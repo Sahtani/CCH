@@ -1,23 +1,14 @@
 import com.youcode.entities.Competition;
 import com.youcode.entities.Cyclist;
-import com.youcode.entities.GeneralResult;
 import com.youcode.repositories.CompetitionRepository;
 import com.youcode.repositories.CyclistRepository;
 import com.youcode.repositories.GeneralResultRepository;
 import com.youcode.services.implementations.CompetitionServiceImpl;
 import com.youcode.services.implementations.GeneralResultServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-
-import java.util.Optional;
-
-import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 public class GeneralResultServiceImplTest {
     @InjectMocks

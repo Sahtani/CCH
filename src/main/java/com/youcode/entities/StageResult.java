@@ -22,7 +22,7 @@ public class StageResult {
 
     @NotNull
     @Positive
-    private Integer position;
+    private Integer rank;
 
     @NotNull
     private Duration duration;

@@ -4,7 +4,6 @@ import jakarta.validation.constraints.*;
 
 import java.time.LocalDate;
 public record CompetitionRequestDTO(
-        int id,
         @NotBlank String name,
         @NotNull String location,
         @Min(1900) @Max(2100) Integer year,
