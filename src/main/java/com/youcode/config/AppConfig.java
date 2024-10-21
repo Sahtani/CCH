@@ -28,7 +28,7 @@ public class AppConfig {
         ds.setUsername("postgres");
         ds.setPassword("soumia");
         ds.setDriverClassName("org.postgresql.Driver");
-        ds.setAutoCommit(true); // Optional: Set autocommit mode
+        ds.setAutoCommit(true);
         ds.setTransactionIsolation("TRANSACTION_READ_COMMITTED");
         return ds;
     }
@@ -36,7 +36,7 @@ public class AppConfig {
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
-        vendorAdapter.setGenerateDdl(true); // Auto-generate schema
+        vendorAdapter.setGenerateDdl(true);
 
         LocalContainerEntityManagerFactoryBean factoryBean = new LocalContainerEntityManagerFactoryBean();
         factoryBean.setJpaVendorAdapter(vendorAdapter);

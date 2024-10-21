@@ -10,37 +10,45 @@ import com.youcode.repositories.CompetitionRepository;
 import com.youcode.repositories.CyclistRepository;
 import com.youcode.repositories.GeneralResultRepository;
 import com.youcode.services.api.GeneralResultService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
+
 @Service
+@Transactional
+@Validated
 public class GeneralResultServiceImpl implements GeneralResultService {
-    @Autowired
-    private GeneralResultRepository generalResultRepository;
-    @Autowired
-    private CompetitionRepository competitionRepository;
-    @Autowired
-    private CyclistRepository cyclistRepository;
+
+    private final GeneralResultRepository generalResultRepository;
+
+    private final CompetitionRepository competitionRepository;
+
+    private final CyclistRepository cyclistRepository;
     private final GeneralResultMapper generalResultMapper;
 
-    public GeneralResultServiceImpl(GeneralResultMapper generalResultMapper) {
+    public GeneralResultServiceImpl(GeneralResultRepository generalResultRepository, CompetitionRepository competitionRepository, CyclistRepository cyclistRepository, GeneralResultMapper generalResultMapper) {
+        this.generalResultRepository = generalResultRepository;
+        this.competitionRepository = competitionRepository;
+        this.cyclistRepository = cyclistRepository;
         this.generalResultMapper = generalResultMapper;
     }
 
     @Override
     public GeneralResultResponseDTO subscribeToCompetition(GeneralResultRequestDTO dto) {
-        Cyclist cyclist = cyclistRepository.findById(dto.cyclistId())
-                .orElseThrow(() -> new IllegalArgumentException("Cyclist not found with ID: " + dto.cyclistId()));
+        // Convert DTO to Entity
+        GeneralResult result = generalResultMapper.toEntity(dto);
+        System.out.println(result + "hdfkjhf");
+        GeneralResult savedResult = generalResultRepository.save(result);
+        System.out.println(savedResult.toString());
+        if (savedResult == null) {
+            throw new RuntimeException("Failed to save GeneralResult.");
+        }
 
-        Competition competition = competitionRepository.findById(dto.competitionId())
-                .orElseThrow(() -> new IllegalArgumentException("Competition not found with ID: " + dto.competitionId()));
-
-        GeneralResult result = new GeneralResult();
-        result.setCyclist(cyclist);
-        result.setCompetition(competition);
-        generalResultRepository.save(result);
-
-        return generalResultMapper.toResponseDTO(result);
+        // Convert the saved result to a response DTO
+        return generalResultMapper.toResponseDTO(savedResult);
     }
+
 
 }
 

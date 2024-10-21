@@ -2,10 +2,7 @@ package com.youcode.entities;
 
 import com.youcode.embedded.GeneralResultId;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.Duration;
 
@@ -15,6 +12,7 @@ import java.time.Duration;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Data
 @Table(name = "general_results")
 public class GeneralResult {
 
