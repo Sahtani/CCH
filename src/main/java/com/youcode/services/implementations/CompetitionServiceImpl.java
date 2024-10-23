@@ -7,6 +7,7 @@ import com.youcode.mappers.CompetitionMapper;
 import com.youcode.repositories.CompetitionRepository;
 import com.youcode.services.api.CompetitionService;
 import jakarta.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
@@ -22,7 +23,7 @@ public class CompetitionServiceImpl implements CompetitionService {
 
     private CompetitionRepository competitionRepository;
     private final CompetitionMapper competitionMapper;
-
+@Autowired
     public CompetitionServiceImpl(CompetitionRepository competitionRepository,CompetitionMapper competitionMapper) {
         this.competitionRepository = competitionRepository;
         this.competitionMapper = competitionMapper;
@@ -30,7 +31,7 @@ public class CompetitionServiceImpl implements CompetitionService {
 
     @Override
     public List<CompetitionResponseDto> getAll() {
-        return competitionRepository.findAll().stream().map(competitionMapper::toResponseDTO).collect(Collectors.toList());
+        return competitionRepository.findAll().stream().map(competitionMapper::toDTO).collect(Collectors.toList());
     }
     @Override
     public Optional<CompetitionResponseDto> getById(Long id) {

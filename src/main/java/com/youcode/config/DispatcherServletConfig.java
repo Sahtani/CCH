@@ -1,6 +1,5 @@
 package com.youcode.config;
 
-import com.youcode.config.AppConfig;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRegistration;

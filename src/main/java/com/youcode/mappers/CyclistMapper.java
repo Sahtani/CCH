@@ -7,9 +7,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
 @Mapper(componentModel = "spring")
-public interface CyclistMapper {
-    CyclistResponseDTO toDTO(Cyclist cyclist);
-    Cyclist toEntity(CyclistRequestDTO cyclist);
+public interface CyclistMapper extends GenericMapper<Cyclist, CyclistRequestDTO, CyclistResponseDTO> {
+
 }
 
 
