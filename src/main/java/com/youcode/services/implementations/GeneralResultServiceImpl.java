@@ -46,7 +46,7 @@ public class GeneralResultServiceImpl implements GeneralResultService {
         }
 
         // Convert the saved result to a response DTO
-        return generalResultMapper.toResponseDTO(savedResult);
+        return generalResultMapper.toDto(savedResult);
     }
 
 

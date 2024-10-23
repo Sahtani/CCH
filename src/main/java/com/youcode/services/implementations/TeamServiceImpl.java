@@ -12,6 +12,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -34,8 +35,10 @@ public class TeamServiceImpl implements TeamService {
 
     @Override
     public List<TeamResponseDTO> getAll() {
-        return teamRepository.findAll().stream().map(teamMapper::toResponseDTO).collect(Collectors.toList());
+        return null;
+
     }
+
 
     @Override
     public Optional<TeamResponseDTO> getById(Long teamId) {
@@ -44,7 +47,7 @@ public class TeamServiceImpl implements TeamService {
 
         Set<CyclistResponseDTO> cyclistDTOs = team.getCyclists()
                 .stream()
-                .map(cyclistMapper::toDTO)
+                .map(cyclistMapper::toDto)
                 .collect(Collectors.toSet());
 
         return Optional.of(new TeamResponseDTO(team.getId(), team.getName(), cyclistDTOs));
@@ -66,7 +69,7 @@ public class TeamServiceImpl implements TeamService {
         Team team = new Team();
         team.setName(dto.name());
         Team savedTeam = teamRepository.save(team);
-        return new TeamResponseDTO(savedTeam.getId(), savedTeam.getName(), null); // Ajustez le constructeur selon vos besoins
+        return new TeamResponseDTO(savedTeam.getId(), savedTeam.getName(), null);
     }
 
 
