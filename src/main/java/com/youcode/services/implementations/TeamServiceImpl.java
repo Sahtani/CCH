@@ -12,7 +12,6 @@ import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -35,9 +34,12 @@ public class TeamServiceImpl implements TeamService {
 
     @Override
     public List<TeamResponseDTO> getAll() {
-        return null;
-
+        return teamRepository.findAll()
+                .stream()
+                .map(teamMapper::toDto)
+                .collect(Collectors.toList());
     }
+
 
 
     @Override
@@ -50,7 +52,7 @@ public class TeamServiceImpl implements TeamService {
                 .map(cyclistMapper::toDto)
                 .collect(Collectors.toSet());
 
-        return Optional.of(new TeamResponseDTO(team.getId(), team.getName(), cyclistDTOs));
+        return Optional.of(new TeamResponseDTO(team.getId(), team.getName()));
     }
 
     @Override
@@ -69,8 +71,22 @@ public class TeamServiceImpl implements TeamService {
         Team team = new Team();
         team.setName(dto.name());
         Team savedTeam = teamRepository.save(team);
-        return new TeamResponseDTO(savedTeam.getId(), savedTeam.getName(), null);
+        return new TeamResponseDTO(savedTeam.getId(), savedTeam.getName());
     }
 
+    @Override
+    public TeamResponseDTO update(Long id, TeamRequestDTO teamDTO) {
+        Optional<Team> existingTeamOpt = teamRepository.findById(id);
+        if (existingTeamOpt.isEmpty()) {
+            throw new RuntimeException("Team with ID " + id + " not found.");
+        }
+        Team existingTeam = existingTeamOpt.get();
+        Team team = new Team();
+        team.setName(teamDTO.name());
+
+        Team updatedTeam = teamRepository.save(existingTeam);
+
+        return new TeamResponseDTO(updatedTeam.getId(), updatedTeam.getName());
+    }
 
 }

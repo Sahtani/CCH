@@ -47,6 +47,11 @@ public class CompetitionServiceImpl implements CompetitionService {
     }
 
     @Override
+    public CompetitionResponseDto update(Long id, CompetitionRequestDTO competitionRequestDTO) {
+        return null;
+    }
+
+    @Override
     public void delete(Long id) {
         competitionRepository.deleteById(id);
     }

@@ -3,7 +3,6 @@ package com.youcode.services.implementations;
 import com.youcode.dtos.request.CyclistRequestDTO;
 import com.youcode.dtos.response.CyclistResponseDTO;
 import com.youcode.entities.Cyclist;
-import com.youcode.entities.Team;
 import com.youcode.mappers.CyclistMapper;
 import com.youcode.repositories.CyclistRepository;
 import com.youcode.services.api.CyclistService;
@@ -45,6 +44,11 @@ public class CyclistServiceImpl implements CyclistService {
         Cyclist cyclist = cyclistMapper.toEntity(cyclistRequestDTO);
         Cyclist savedCyclist = cyclistRepository.save(cyclist);
         return cyclistMapper.toDto(savedCyclist);
+    }
+
+    @Override
+    public CyclistResponseDTO update(Long id, CyclistRequestDTO cyclistRequestDTO) {
+        return null;
     }
 
 
