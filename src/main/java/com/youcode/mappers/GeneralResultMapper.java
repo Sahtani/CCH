@@ -12,6 +12,8 @@ import com.youcode.repositories.CompetitionRepository;
 import com.youcode.repositories.CyclistRepository;
 import org.springframework.stereotype.Component;
 
+import java.time.Duration;
+
 @Component
 public class GeneralResultMapper {
  private final CompetitionMapper competitionMapper;
@@ -31,8 +33,12 @@ public class GeneralResultMapper {
         CompetitionResponseDto competitionDTO = competitionMapper.toResponseDTO(entity.getCompetition());
         CyclistResponseDTO cyclistDTO = cyclistMapper.toResponseDTO(entity.getCyclist());
 
-        return new GeneralResultResponseDTO(competitionDTO, cyclistDTO);
+        Duration generalTime = entity.getGeneralTime();
+        Integer generalRank = entity.getGeneralRank();
+
+        return new GeneralResultResponseDTO(competitionDTO, cyclistDTO, generalTime, generalRank);
     }
+
 
 
     // Map properties from DTO to entity
@@ -50,7 +56,7 @@ public class GeneralResultMapper {
 
         // Create and set the GeneralResult
         GeneralResult generalResult = new GeneralResult();
-        generalResult.setId(resultId);  // Set the composite ID
+        generalResult.setId(resultId);  //set the composist id
         generalResult.setCyclist(cyclist);
         generalResult.setCompetition(competition);
 

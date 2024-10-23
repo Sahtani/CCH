@@ -11,11 +11,14 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import javax.sql.DataSource;
 import java.util.Properties;
 
 @Configuration
+@EnableWebMvc
 @EnableJpaRepositories(basePackages = "com.youcode.repositories")
 @ComponentScan("com.youcode")
 @EnableTransactionManagement
@@ -44,7 +47,7 @@ public class AppConfig {
         factoryBean.setPackagesToScan("com.youcode.entities");
 
         Properties jpaProperties = new Properties();
-        jpaProperties.put("hibernate.hbm2ddl.auto", "create");
+        jpaProperties.put("hibernate.hbm2ddl.auto", "update");
         jpaProperties.put("hibernate.show_sql", "true");
         jpaProperties.put("hibernate.format_sql", "true");
         jpaProperties.put("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
@@ -59,4 +62,13 @@ public class AppConfig {
         tx.setEntityManagerFactory(entityManagerFactory);
         return tx;
     }
+    @Bean
+    public InternalResourceViewResolver viewResolver() {
+        InternalResourceViewResolver resolver = new InternalResourceViewResolver();
+        resolver.setPrefix("/WEB-INF/views/");
+        resolver.setSuffix(".jsp");
+        return resolver;
+    }
+
+
 }
