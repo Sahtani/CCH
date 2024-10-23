@@ -44,7 +44,7 @@ public class TeamServiceImpl implements TeamService {
 
         Set<CyclistResponseDTO> cyclistDTOs = team.getCyclists()
                 .stream()
-                .map(cyclistMapper::toResponseDTO)
+                .map(cyclistMapper::toDTO)
                 .collect(Collectors.toSet());
 
         return Optional.of(new TeamResponseDTO(team.getId(), team.getName(), cyclistDTOs));

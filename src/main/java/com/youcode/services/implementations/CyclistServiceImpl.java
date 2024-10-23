@@ -30,21 +30,21 @@ public class CyclistServiceImpl implements CyclistService {
     @Override
     public List<CyclistResponseDTO> getAll() {
         return cyclistRepository.findAll().stream()
-                .map(cyclistMapper::toResponseDTO)
+                .map(cyclistMapper::toDTO)
                 .collect(Collectors.toList());
     }
 
     @Override
     public Optional<CyclistResponseDTO> getById(Long id) {
         return cyclistRepository.findById(id)
-                .map(cyclistMapper::toResponseDTO);
+                .map(cyclistMapper::toDTO);
     }
 
     @Override
     public CyclistResponseDTO save(CyclistRequestDTO cyclistRequestDTO) {
         Cyclist cyclist = cyclistMapper.toEntity(cyclistRequestDTO);
         Cyclist savedCyclist = cyclistRepository.save(cyclist);
-        return cyclistMapper.toResponseDTO(savedCyclist);
+        return cyclistMapper.toDTO(savedCyclist);
     }
 
 
@@ -52,7 +52,7 @@ public class CyclistServiceImpl implements CyclistService {
 
         Cyclist cyclist = cyclistMapper.toEntity(cyclistRequestDTO);
         Cyclist updatedCyclist = cyclistRepository.save(cyclist);
-        return cyclistMapper.toResponseDTO(updatedCyclist);
+        return cyclistMapper.toDTO(updatedCyclist);
     }
 
     @Override
@@ -63,14 +63,14 @@ public class CyclistServiceImpl implements CyclistService {
     public List<CyclistResponseDTO> getCyclistsSortedByName() {
         return cyclistRepository.findAll().stream()
                 .sorted(Comparator.comparing(Cyclist::getName))
-                .map(cyclistMapper::toResponseDTO)
+                .map(cyclistMapper::toDTO)
                 .collect(Collectors.toList());
     }
 
     public List<CyclistResponseDTO> getCyclistsSortedByNationality() {
         return cyclistRepository.findAll().stream()
                 .sorted(Comparator.comparing(Cyclist::getNationality))
-                .map(cyclistMapper::toResponseDTO)
+                .map(cyclistMapper::toDTO)
                 .collect(Collectors.toList());
     }
 }

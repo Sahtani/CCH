@@ -3,10 +3,13 @@ package com.youcode;
 import com.youcode.config.AppConfig;
 import com.youcode.dtos.request.CompetitionRequestDTO;
 import com.youcode.dtos.request.GeneralResultRequestDTO;
+import com.youcode.dtos.request.TeamRequestDTO;
 import com.youcode.dtos.response.CompetitionResponseDto;
 import com.youcode.dtos.response.GeneralResultResponseDTO;
+import com.youcode.dtos.response.TeamResponseDTO;
 import com.youcode.services.api.CompetitionService;
 import com.youcode.services.api.GeneralResultService;
+import com.youcode.services.api.TeamService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
@@ -34,13 +37,13 @@ public class Main {
 
 
         //  save team
-//        TeamService teamService = context.getBean(TeamService.class);
-//        TeamRequestDTO newTeamDTO = new TeamRequestDTO("Team 2");
-//        TeamResponseDTO savedTeam = teamService.save(newTeamDTO);
-//
-//        System.out.println("Team saved: " + savedTeam.name());
+        TeamService teamService = context.getBean(TeamService.class);
+        TeamRequestDTO newTeamDTO = new TeamRequestDTO("Team 2");
+        TeamResponseDTO savedTeam = teamService.save(newTeamDTO);
 
-        CompetitionService competitionService = context.getBean(CompetitionService.class);
+        System.out.println("Team saved: " + savedTeam.name());
+
+     //   CompetitionService competitionService = context.getBean(CompetitionService.class);
 ////
 //// Create a new CompetitionRequestDTO
 //        CompetitionRequestDTO competitionDTO = new CompetitionRequestDTO(

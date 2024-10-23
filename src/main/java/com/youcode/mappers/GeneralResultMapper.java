@@ -31,7 +31,7 @@ public class GeneralResultMapper {
     // Map properties from entity to DTO
     public GeneralResultResponseDTO toResponseDTO(GeneralResult entity) {
         CompetitionResponseDto competitionDTO = competitionMapper.toResponseDTO(entity.getCompetition());
-        CyclistResponseDTO cyclistDTO = cyclistMapper.toResponseDTO(entity.getCyclist());
+        CyclistResponseDTO cyclistDTO = cyclistMapper.toDTO(entity.getCyclist());
 
         Duration generalTime = entity.getGeneralTime();
         Integer generalRank = entity.getGeneralRank();
