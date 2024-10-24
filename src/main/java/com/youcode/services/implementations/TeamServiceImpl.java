@@ -9,6 +9,7 @@ import com.youcode.mappers.TeamMapper;
 import com.youcode.repositories.TeamRepository;
 import com.youcode.services.api.TeamService;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
@@ -20,18 +21,12 @@ import java.util.stream.Collectors;
 @Service
 @Validated
 @Transactional
+@RequiredArgsConstructor
 public class TeamServiceImpl implements TeamService {
 
     private final TeamRepository teamRepository;
     private final TeamMapper teamMapper;
     private final CyclistMapper cyclistMapper;
-
-    public TeamServiceImpl(TeamRepository teamRepository, TeamMapper teamMapper, CyclistMapper cyclistMapper) {
-        this.teamRepository = teamRepository;
-        this.teamMapper = teamMapper;
-        this.cyclistMapper = cyclistMapper;
-    }
-
     @Override
     public List<TeamResponseDTO> getAll() {
         return teamRepository.findAll()
@@ -76,17 +71,14 @@ public class TeamServiceImpl implements TeamService {
 
     @Override
     public TeamResponseDTO update(Long id, TeamRequestDTO teamDTO) {
-        Optional<Team> existingTeamOpt = teamRepository.findById(id);
-        if (existingTeamOpt.isEmpty()) {
+        Optional<Team> team = teamRepository.findById(id);
+        if (team.isEmpty()) {
             throw new RuntimeException("Team with ID " + id + " not found.");
         }
-        Team existingTeam = existingTeamOpt.get();
-        Team team = new Team();
-        team.setName(teamDTO.name());
+        Team existingTeam = team.get();
+        existingTeam.setName(teamDTO.name());
+        return teamMapper.toDto(existingTeam);
 
-        Team updatedTeam = teamRepository.save(existingTeam);
-
-        return new TeamResponseDTO(updatedTeam.getId(), updatedTeam.getName());
     }
 
 }
