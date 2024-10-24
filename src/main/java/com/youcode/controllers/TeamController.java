@@ -5,7 +5,7 @@ import com.youcode.dtos.response.TeamResponseDTO;
 import com.youcode.entities.Team;
 import com.youcode.services.api.TeamService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,25 +18,52 @@ import java.util.Optional;
 public class TeamController {
     private final TeamService teamService;
 
+    //GET all teams
     @GetMapping
     public ResponseEntity<List<TeamResponseDTO>> getAllTeams() {
         List<TeamResponseDTO> teams = teamService.getAll();
-        return ResponseEntity.ok(teams);
+        return new ResponseEntity<>(teams, HttpStatus.OK);
     }
 
+    //Get a team by id
     @GetMapping("/{id}")
     public ResponseEntity<TeamResponseDTO> getTeamById(@PathVariable Long id) {
         Optional<TeamResponseDTO> team = teamService.getById(id);
         return ResponseEntity.ok(team.get());
     }
+
+    //POST a add new team
     @PostMapping
     public ResponseEntity<TeamResponseDTO> createTeam(@RequestBody TeamRequestDTO teamRequestDTO) {
         TeamResponseDTO createdTeam = teamService.save(teamRequestDTO);
-        return ResponseEntity.ok(createdTeam);
+        return new ResponseEntity<>(createdTeam, HttpStatus.CREATED);
     }
+
+    //PUT to update an existing team
     @PutMapping("/{id}")
     public ResponseEntity<TeamResponseDTO> updateTeam(@PathVariable Long id, @RequestBody TeamRequestDTO teamRequestDTO) {
-        TeamResponseDTO updatedTeam = teamService.update(id,teamRequestDTO);
-        return ResponseEntity.ok(updatedTeam);
+
+        if (teamService.getById(id).isPresent()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(null);
+        }
+
+        TeamResponseDTO updatedTeam = teamService.update(id, teamRequestDTO);
+        return new ResponseEntity<>(updatedTeam, HttpStatus.OK);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteTeam(@PathVariable("id") Long id) {
+        Optional<TeamResponseDTO> team = teamService.getById(id);
+
+        if (team.isPresent()) {
+            teamService.delete(id);
+            return ResponseEntity.status(HttpStatus.NO_CONTENT)
+                    .body("Team with ID " + id + " has been deleted successfully.");
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Team with ID " + id + " not found.");
+        }
+    }
+
 }
