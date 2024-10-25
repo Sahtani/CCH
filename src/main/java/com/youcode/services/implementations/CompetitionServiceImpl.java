@@ -6,6 +6,7 @@ import com.youcode.entities.Competition;
 import com.youcode.mappers.CompetitionMapper;
 import com.youcode.repositories.CompetitionRepository;
 import com.youcode.services.api.CompetitionService;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +46,18 @@ public class CompetitionServiceImpl implements CompetitionService {
 
     @Override
     public CompetitionResponseDto update(Long id, CompetitionRequestDTO competitionRequestDTO) {
-        return null;
+        Competition competition = competitionRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Competition with ID " + id + " not found."));
+
+        competition.setName(competitionRequestDTO.name());
+                .setLocation(competitionRequestDTO.location())
+                .setYear(competitionRequestDTO.year())
+                .setStartDate(competitionRequestDTO.startDate())
+                .setEndDate(competitionRequestDTO.endDate());
+
+        competitionRepository.save(competition);
+
+        return competitionMapper.toDto(competition);
     }
 
     @Override

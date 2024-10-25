@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.*;
+import lombok.experimental.Accessors;
 
 import java.time.Duration;
 
@@ -15,6 +16,7 @@ import java.time.Duration;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Accessors(fluent = true, chain = true)
 public class StageResult {
 
     @EmbeddedId

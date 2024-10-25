@@ -76,15 +76,6 @@ public class CyclistServiceImpl implements CyclistService {
             throw new RuntimeException("An unexpected error occurred: " + e.getMessage());
         }
     }
-
-
-    public CyclistResponseDTO update(CyclistRequestDTO cyclistRequestDTO) {
-
-        Cyclist cyclist = cyclistMapper.toEntity(cyclistRequestDTO);
-        Cyclist updatedCyclist = cyclistRepository.save(cyclist);
-        return cyclistMapper.toDto(updatedCyclist);
-    }
-
     @Override
     public void delete(Long id) {
         cyclistRepository.deleteById(id);

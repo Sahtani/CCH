@@ -3,6 +3,7 @@ package com.youcode.entities;
 import jakarta.persistence.*;
 import lombok.*;
 import jakarta.validation.constraints.*;
+import lombok.experimental.Accessors;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Accessors(fluent = true, chain = true)
 public class Cyclist extends BaseEntity {
 
     @NotBlank

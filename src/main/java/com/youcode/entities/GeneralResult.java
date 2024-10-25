@@ -3,6 +3,7 @@ package com.youcode.entities;
 import com.youcode.embedded.GeneralResultId;
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.Accessors;
 
 import java.time.Duration;
 
@@ -14,6 +15,7 @@ import java.time.Duration;
 @NoArgsConstructor
 @Data
 @Table(name = "general_results")
+@Accessors(fluent = true, chain = true)
 public class GeneralResult {
 
     @EmbeddedId
