@@ -16,7 +16,7 @@ import java.time.Duration;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Accessors(fluent = true, chain = true)
+@Accessors(chain = true)
 public class StageResult {
 
     @EmbeddedId

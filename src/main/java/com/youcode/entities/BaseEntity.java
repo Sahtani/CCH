@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 
 @Data
 @MappedSuperclass
-@Accessors(fluent = true, chain = true)
+@Accessors(chain = true)
 public abstract class BaseEntity {
 
     @Id

@@ -16,13 +16,11 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Table(name = "competitions")
-@Accessors(fluent = true, chain = true)
+@Accessors(chain = true)
 public class Competition extends BaseEntity {
 
     @NotNull
     private String name;
-    @NotNull
-    private Integer year;
     @NotBlank
     private String location;
 

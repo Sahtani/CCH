@@ -2,7 +2,6 @@ package com.youcode.controllers;
 
 import com.youcode.dtos.request.CyclistRequestDTO;
 import com.youcode.dtos.response.CyclistResponseDTO;
-import com.youcode.dtos.response.TeamResponseDTO;
 import com.youcode.services.api.CyclistService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -49,12 +48,14 @@ public class CyclistController {
     @PutMapping("/{id}")
     public ResponseEntity<CyclistResponseDTO> updateCyclist(@PathVariable Long id, @RequestBody CyclistRequestDTO cyclistRequestDTO) {
         if (cyclistService.getById(id).isPresent()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(null);
+            CyclistResponseDTO updatedCyclist = cyclistService.update(id, cyclistRequestDTO);
+            return new ResponseEntity<>(updatedCyclist, HttpStatus.OK);
+
         }
-        CyclistResponseDTO updatedCyclist = cyclistService.update(id, cyclistRequestDTO);
-        return new ResponseEntity<>(updatedCyclist, HttpStatus.OK);
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(null);
     }
+
     // DELETE a cyclist
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteCyclist(@PathVariable Long id) {

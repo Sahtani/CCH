@@ -15,7 +15,7 @@ import java.time.Duration;
 @NoArgsConstructor
 @Data
 @Table(name = "general_results")
-@Accessors(fluent = true, chain = true)
+@Accessors(chain = true)
 public class GeneralResult {
 
     @EmbeddedId

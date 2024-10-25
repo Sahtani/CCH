@@ -17,7 +17,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "teams")
-@Accessors(fluent = true, chain = true)
+@Accessors(chain = true)
 public class Team extends BaseEntity {
     @NotNull
     private String name;

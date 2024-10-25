@@ -14,7 +14,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Accessors(fluent = true, chain = true)
+@Accessors(chain = true)
 public class Cyclist extends BaseEntity {
 
     @NotBlank

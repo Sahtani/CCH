@@ -3,13 +3,14 @@ package com.youcode.services.implementations;
 import com.youcode.dtos.request.CompetitionRequestDTO;
 import com.youcode.dtos.response.CompetitionResponseDto;
 import com.youcode.entities.Competition;
+import com.youcode.entities.Cyclist;
+import com.youcode.entities.Team;
 import com.youcode.mappers.CompetitionMapper;
 import com.youcode.repositories.CompetitionRepository;
 import com.youcode.services.api.CompetitionService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
@@ -24,7 +25,7 @@ import java.util.stream.Collectors;
 @Transactional
 public class CompetitionServiceImpl implements CompetitionService {
 
-    private CompetitionRepository competitionRepository;
+    private final CompetitionRepository competitionRepository;
     private final CompetitionMapper competitionMapper;
 
     @Override
@@ -43,15 +44,13 @@ public class CompetitionServiceImpl implements CompetitionService {
         Competition savedCompetition = competitionRepository.save(competition);
         return competitionMapper.toDto(savedCompetition);
     }
-
     @Override
     public CompetitionResponseDto update(Long id, CompetitionRequestDTO competitionRequestDTO) {
         Competition competition = competitionRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Competition with ID " + id + " not found."));
 
-        competition.setName(competitionRequestDTO.name());
+        competition.setName(competitionRequestDTO.name())
                 .setLocation(competitionRequestDTO.location())
-                .setYear(competitionRequestDTO.year())
                 .setStartDate(competitionRequestDTO.startDate())
                 .setEndDate(competitionRequestDTO.endDate());
 
@@ -64,24 +63,6 @@ public class CompetitionServiceImpl implements CompetitionService {
     public void delete(Long id) {
         competitionRepository.deleteById(id);
     }
-    public CompetitionResponseDto update(Competition competition) {
-        if (!competitionRepository.existsById(competition.getId())) {
-            throw new IllegalArgumentException("Competition not found.");
-        }
-
-        Competition updatedCompetition = competitionRepository.save(competition);
-
-        return new CompetitionResponseDto(
-                updatedCompetition.getId(),
-                updatedCompetition.getName(),
-                updatedCompetition.getLocation(),
-                updatedCompetition.getYear(),
-                updatedCompetition.getStartDate(),
-                updatedCompetition.getEndDate()
-        );
-    }
-
-
     @Override
     public List<Competition> getCompetitionsFiltered(LocalDate date, String location) {
         List<Competition> filteredCompetitions = new ArrayList<>(competitionRepository.findAll());

@@ -49,32 +49,31 @@ public class CompetitionServiceImplTest {
      //   competition.add(cyclist);
     }
 
-    @Test
-    public void testUpdate_CompetitionExists() {
-        // Arrange
-        when(competitionRepository.existsById(competition.getId())).thenReturn(true);
-        when(competitionRepository.save(competition)).thenReturn(competition);
+//    public void testUpdate_CompetitionExists() {
+//        // Arrange
+//        when(competitionRepository.existsById(competition.getId())).thenReturn(true);
+//        when(competitionRepository.save(competition)).thenReturn(competition);
+//
+//        // Act
+//        CompetitionResponseDto updatedCompetition = competitionService.update(competition);
+//
+//        // Assert
+//        assertNotNull(updatedCompetition);
+//        assertEquals(competition.getId(), updatedCompetition.id());
+//        verify(competitionRepository).save(competition);
+//    }
 
-        // Act
-        CompetitionResponseDto updatedCompetition = competitionService.update(competition);
-
-        // Assert
-        assertNotNull(updatedCompetition);
-        assertEquals(competition.getId(), updatedCompetition.id());
-        verify(competitionRepository).save(competition);
-    }
-
-    @Test
-    public void testUpdate_CompetitionDoesNotExist() {
-        // Arrange
-        when(competitionRepository.existsById(competition.getId())).thenReturn(false);
-
-        // Act & Assert
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
-            competitionService.update(competition);
-        });
-
-        assertEquals("Competition not found.", exception.getMessage());
-        verify(competitionRepository, never()).save(any());
-    }
+//    @Test
+//    public void testUpdate_CompetitionDoesNotExist() {
+//        // Arrange
+//        when(competitionRepository.existsById(competition.getId())).thenReturn(false);
+//
+//        // Act & Assert
+//        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
+//            competitionService.update(competition);
+//        });
+//
+//        assertEquals("Competition not found.", exception.getMessage());
+//        verify(competitionRepository, never()).save(any());
+//    }
 }

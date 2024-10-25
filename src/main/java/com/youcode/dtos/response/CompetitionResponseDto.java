@@ -6,7 +6,6 @@ public record CompetitionResponseDto(
         Long id,
         String name,
         String location,
-        Integer year,
         LocalDate startDate,
         LocalDate endDate
 ) {}

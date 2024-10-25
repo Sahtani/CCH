@@ -16,7 +16,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Accessors(fluent = true, chain = true)
+@Accessors(chain = true)
 public class Stage extends BaseEntity {
 
     @Positive
