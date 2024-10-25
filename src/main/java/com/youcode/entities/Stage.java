@@ -1,6 +1,7 @@
 package com.youcode.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
 import lombok.*;
@@ -29,7 +30,7 @@ public class Stage extends BaseEntity {
 
     @Column(nullable = false)
     private LocalDate date;
-
+    @Future
     @Column(nullable = false)
     private String type;
 

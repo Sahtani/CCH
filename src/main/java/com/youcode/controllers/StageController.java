@@ -5,6 +5,7 @@ import com.youcode.dtos.response.StageResponseDTO;
 import com.youcode.dtos.response.StageResultResponseDTO;
 import com.youcode.entities.Stage;
 import com.youcode.mappers.StageResultMapperImpl;
+import com.youcode.services.api.StageService;
 import com.youcode.services.implementations.StageResultServiceImpl;
 import com.youcode.services.implementations.StageServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +21,7 @@ import java.util.List;
 public class StageController {
 
 
-    private StageServiceImpl stageService;
+    private final StageService stageService;
 
     @GetMapping
     public List<StageResultResponseDTO> getAllStages() {

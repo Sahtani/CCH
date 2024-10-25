@@ -1,11 +1,11 @@
 package com.youcode.services.implementations;
 
+import com.youcode.common.exceptions.EntityNotFoundException;
 import com.youcode.dtos.request.StageRequestDTO;
 import com.youcode.dtos.response.StageResponseDTO;
 import com.youcode.mappers.StageMapper;
 import com.youcode.repositories.StageRepositroy;
 import com.youcode.services.api.StageService;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -28,10 +28,10 @@ public class StageServiceImpl implements StageService {
 
     @Override
     public Optional<StageResponseDTO> getById(Long id) {
-        return stageRepo.findById(id)
-                .map(stageMapper::toDto);
+        return Optional.ofNullable(stageRepo.findById(id)
+                .map(stageMapper::toDto)
+                .orElseThrow(() -> new EntityNotFoundException("Stage", id)));
     }
-
     @Override
     public StageResponseDTO save(StageRequestDTO stageRequestDTO) {
         return null;
