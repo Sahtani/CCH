@@ -1,5 +1,6 @@
 package com.youcode.services.implementations;
 
+import com.youcode.common.exceptions.EntityNotFoundException;
 import com.youcode.dtos.request.CyclistRequestDTO;
 import com.youcode.dtos.response.CyclistResponseDTO;
 import com.youcode.entities.Cyclist;
@@ -8,7 +9,6 @@ import com.youcode.mappers.CyclistMapper;
 import com.youcode.repositories.CyclistRepository;
 import com.youcode.repositories.TeamRepository;
 import com.youcode.services.api.CyclistService;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import jakarta.validation.ValidationException;
 import lombok.RequiredArgsConstructor;
@@ -56,7 +56,7 @@ public class CyclistServiceImpl implements CyclistService {
         try {
             Optional<Cyclist> existingCyclistOpt = cyclistRepository.findById(id);
             if (existingCyclistOpt.isEmpty()) {
-                throw new EntityNotFoundException("Cyclist with ID " + id + " not found.");
+                throw new EntityNotFoundException("Cyclist",id );
             }
 
             Cyclist existingCyclist = existingCyclistOpt.get();
@@ -64,7 +64,7 @@ public class CyclistServiceImpl implements CyclistService {
             existingCyclist.setAge(cyclistRequestDTO.age());
             existingCyclist.setNationality(cyclistRequestDTO.nationality());
 
-            Team team = teamRepository.findById(cyclistRequestDTO.teamId()).orElseThrow(() -> new EntityNotFoundException("Team with ID " + cyclistRequestDTO.teamId() + " not found."));
+            Team team = teamRepository.findById(cyclistRequestDTO.teamId()).orElseThrow(() -> new EntityNotFoundException("Team" ,cyclistRequestDTO.teamId());
 
             existingCyclist.setTeam(team);
 
