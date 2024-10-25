@@ -30,7 +30,7 @@ public class CompetitionController {
     public ResponseEntity<CompetitionResponseDTO> getCompetitionById(@PathVariable Long id) {
         return competitionService.getById(id)
                 .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build()); // Return 404 without body
+                .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build()); 
     }
 
     // POST create new competition
@@ -48,17 +48,17 @@ public class CompetitionController {
                     CompetitionResponseDTO updatedCompetition = competitionService.update(id, dto);
                     return ResponseEntity.ok(updatedCompetition);
                 })
-                .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build()); // Return 404 if not found
+                .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
     // DELETE competition by ID
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
-        if (competitionService.getById(id).isPresent()) { // Check if competition exists before deleting
+        if (competitionService.getById(id).isPresent()) {
             competitionService.delete(id);
             return ResponseEntity.noContent().build();
         } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build(); // Return 404 if not found
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
 }

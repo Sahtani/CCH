@@ -30,18 +30,21 @@ public class CompetitionServiceImpl implements CompetitionService {
     public List<CompetitionResponseDTO> getAll() {
         return competitionRepository.findAll().stream().map(competitionMapper::toDto).collect(Collectors.toList());
     }
+
     @Override
     public Optional<CompetitionResponseDTO> getById(Long id) {
         Competition competition = competitionRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Competition not found."));
         return Optional.ofNullable(competitionMapper.toDto(competition));
     }
+
     @Override
     public CompetitionResponseDTO save(CompetitionRequestDTO dto) {
         Competition competition = competitionMapper.toEntity(dto);
         Competition savedCompetition = competitionRepository.save(competition);
         return competitionMapper.toDto(savedCompetition);
     }
+
     @Override
     public CompetitionResponseDTO update(Long id, CompetitionRequestDTO competitionRequestDTO) {
         Competition competition = competitionRepository.findById(id)
@@ -61,6 +64,7 @@ public class CompetitionServiceImpl implements CompetitionService {
     public void delete(Long id) {
         competitionRepository.deleteById(id);
     }
+
     @Override
     public List<Competition> getCompetitionsFiltered(LocalDate date, String location) {
         List<Competition> filteredCompetitions = new ArrayList<>(competitionRepository.findAll());
@@ -79,6 +83,4 @@ public class CompetitionServiceImpl implements CompetitionService {
 
         return filteredCompetitions;
     }
-
-
 }

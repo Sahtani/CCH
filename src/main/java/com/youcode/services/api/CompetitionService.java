@@ -2,7 +2,6 @@ package com.youcode.services.api;
 
 import com.youcode.dtos.request.CompetitionRequestDTO;
 import com.youcode.dtos.response.CompetitionResponseDTO;
-import com.youcode.dtos.response.CompetitionResponseDto;
 import com.youcode.entities.Competition;
 
 import java.time.LocalDate;

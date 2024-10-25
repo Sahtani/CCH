@@ -4,7 +4,6 @@ import com.youcode.config.AppConfig;
 import com.youcode.dtos.request.CompetitionRequestDTO;
 import com.youcode.dtos.request.GeneralResultRequestDTO;
 import com.youcode.dtos.request.TeamRequestDTO;
-import com.youcode.dtos.response.CompetitionResponseDto;
 import com.youcode.dtos.response.GeneralResultResponseDTO;
 import com.youcode.dtos.response.TeamResponseDTO;
 import com.youcode.services.api.CompetitionService;

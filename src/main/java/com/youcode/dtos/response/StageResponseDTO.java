@@ -1,5 +1,6 @@
 package com.youcode.dtos.response;
 
+import com.youcode.dtos.embeddable.EmbeddableCompetition;
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -14,5 +15,5 @@ public record StageResponseDTO(
         @NotBlank String endLocation,
         @NotNull @Future LocalDate date,
         @NotBlank String type,
-        @NotNull Long competitionId
+        @NotNull EmbeddableCompetition competition
 ) {}

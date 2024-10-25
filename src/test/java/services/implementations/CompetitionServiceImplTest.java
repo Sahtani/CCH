@@ -3,7 +3,6 @@ package services.implementations;
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-import com.youcode.dtos.response.CompetitionResponseDto;
 import com.youcode.entities.Competition;
 import com.youcode.entities.Cyclist;
 import com.youcode.repositories.CompetitionRepository;

@@ -1,15 +1,9 @@
 package com.youcode.mappers;
 
 import com.youcode.dtos.request.GeneralResultRequestDTO;
-import com.youcode.dtos.response.CompetitionResponseDto;
 import com.youcode.dtos.response.CyclistResponseDTO;
 import com.youcode.dtos.response.GeneralResultResponseDTO;
-import com.youcode.embedded.GeneralResultId;
-import com.youcode.entities.Competition;
-import com.youcode.entities.Cyclist;
 import com.youcode.entities.GeneralResult;
-import com.youcode.repositories.CompetitionRepository;
-import com.youcode.repositories.CyclistRepository;
 import org.mapstruct.Mapper;
 import org.springframework.stereotype.Component;
 
