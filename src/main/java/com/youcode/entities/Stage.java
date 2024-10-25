@@ -27,14 +27,14 @@ public class Stage extends BaseEntity {
     private String startLocation;
     @NotBlank
     private String endLocation;
-
+    @Future
     @Column(nullable = false)
     private LocalDate date;
-    @Future
+
     @Column(nullable = false)
     private String type;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Competition competition;
 
     @OneToMany(mappedBy = "stage", cascade = CascadeType.ALL, fetch = FetchType.EAGER)

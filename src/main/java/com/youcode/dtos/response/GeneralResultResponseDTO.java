@@ -4,7 +4,7 @@ import jakarta.validation.constraints.NotNull;
 import java.time.Duration;
 
 public record GeneralResultResponseDTO(
-        @NotNull CompetitionResponseDto competition,
+        @NotNull CompetitionResponseDTO competition,
         @NotNull CyclistResponseDTO cyclist,
         @NotNull Duration generalTime,
         @NotNull Integer generalRank

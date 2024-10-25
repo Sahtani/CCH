@@ -46,6 +46,8 @@ public class StageServiceImpl implements StageService {
             throw new ValidationException("Stage date must be between competition start date and end date.");
         }
         Stage stage = stageMapper.toEntity(stageRequestDTO);
+        stage.setCompetition(competition);
+        competition.getStages().add(stage);
         stage = stageRepo.save(stage);
         return stageMapper.toDto(stage);
     }
@@ -58,16 +60,16 @@ public class StageServiceImpl implements StageService {
     if (!isDateWithinCompetitionRange(stageDate, competition)) {
         throw new ValidationException("Stage date must be between competition start date and end date.");
     }
-        stage.setNumber(stageRequestDTO.number())
-                .set(dto.distance())
-                .setStartLocation(dto.startLocation())
-                .setEndLocation(dto.endLocation())
-                .setDate(dto.date())
+        stage.setNumber(stageRequestDTO.number()).setStartLocation(stageRequestDTO.startLocation()).setEndLocation(stageRequestDTO.endLocation()).setDate(stageRequestDTO.date())
                 .setCompetition(competition);
-        return mapper.toResponseDto(stage);
+        return stageMapper.toDto(stage);
     }
     @Override
-    public void delete(Long aLong) {
+    public void delete(Long id) {
+        if (!stageRepo.existsById(id)) {
+            throw new EntityNotFoundException("Stage", id);
+        }
+        stageRepo.deleteById(id);
 
     }
 

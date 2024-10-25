@@ -1,7 +1,7 @@
 package com.youcode.controllers;
 
 import com.youcode.dtos.request.CompetitionRequestDTO;
-import com.youcode.dtos.response.CompetitionResponseDto;
+import com.youcode.dtos.response.CompetitionResponseDTO;
 import com.youcode.services.api.CompetitionService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -20,36 +20,45 @@ public class CompetitionController {
 
     // GET all competitions
     @GetMapping
-    public ResponseEntity<List<CompetitionResponseDto>> getAllCompetitions() {
-        List<CompetitionResponseDto> competitions = competitionService.getAll();
+    public ResponseEntity<List<CompetitionResponseDTO>> getAllCompetitions() {
+        List<CompetitionResponseDTO> competitions = competitionService.getAll();
         return ResponseEntity.ok(competitions);
     }
 
     // GET competition by ID
     @GetMapping("/{id}")
-    public ResponseEntity<CompetitionResponseDto> getCompetitionById(@PathVariable Long id) {
-        return competitionService.getById(id).map(ResponseEntity::ok).orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).body(null));
+    public ResponseEntity<CompetitionResponseDTO> getCompetitionById(@PathVariable Long id) {
+        return competitionService.getById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build()); // Return 404 without body
     }
 
     // POST create new competition
     @PostMapping
-    public ResponseEntity<CompetitionResponseDto> createCompetition(@RequestBody @Valid CompetitionRequestDTO competitionRequestDTO) {
-        CompetitionResponseDto createdCompetition = competitionService.save(competitionRequestDTO);
+    public ResponseEntity<CompetitionResponseDTO> createCompetition(@RequestBody @Valid CompetitionRequestDTO competitionRequestDTO) {
+        CompetitionResponseDTO createdCompetition = competitionService.save(competitionRequestDTO);
         return new ResponseEntity<>(createdCompetition, HttpStatus.CREATED);
     }
 
     // PUT update competition by ID
     @PutMapping("/{id}")
-    public ResponseEntity<CompetitionResponseDto> update(@PathVariable Long id, @RequestBody @Valid CompetitionRequestDTO dto) {
-        CompetitionResponseDto competition = competitionService.update(id, dto);
-        return ResponseEntity.ok(competition);
+    public ResponseEntity<CompetitionResponseDTO> update(@PathVariable Long id, @RequestBody @Valid CompetitionRequestDTO dto) {
+        return competitionService.getById(id) // Check if competition exists
+                .map(existingCompetition -> {
+                    CompetitionResponseDTO updatedCompetition = competitionService.update(id, dto);
+                    return ResponseEntity.ok(updatedCompetition);
+                })
+                .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build()); // Return 404 if not found
     }
 
     // DELETE competition by ID
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
-        competitionService.delete(id);
-        return ResponseEntity.noContent().build();
+        if (competitionService.getById(id).isPresent()) { // Check if competition exists before deleting
+            competitionService.delete(id);
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build(); // Return 404 if not found
+        }
     }
-
 }

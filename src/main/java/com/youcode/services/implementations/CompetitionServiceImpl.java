@@ -1,10 +1,8 @@
 package com.youcode.services.implementations;
 
 import com.youcode.dtos.request.CompetitionRequestDTO;
-import com.youcode.dtos.response.CompetitionResponseDto;
+import com.youcode.dtos.response.CompetitionResponseDTO;
 import com.youcode.entities.Competition;
-import com.youcode.entities.Cyclist;
-import com.youcode.entities.Team;
 import com.youcode.mappers.CompetitionMapper;
 import com.youcode.repositories.CompetitionRepository;
 import com.youcode.services.api.CompetitionService;
@@ -29,23 +27,23 @@ public class CompetitionServiceImpl implements CompetitionService {
     private final CompetitionMapper competitionMapper;
 
     @Override
-    public List<CompetitionResponseDto> getAll() {
+    public List<CompetitionResponseDTO> getAll() {
         return competitionRepository.findAll().stream().map(competitionMapper::toDto).collect(Collectors.toList());
     }
     @Override
-    public Optional<CompetitionResponseDto> getById(Long id) {
+    public Optional<CompetitionResponseDTO> getById(Long id) {
         Competition competition = competitionRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Competition not found."));
         return Optional.ofNullable(competitionMapper.toDto(competition));
     }
     @Override
-    public CompetitionResponseDto save(CompetitionRequestDTO dto) {
+    public CompetitionResponseDTO save(CompetitionRequestDTO dto) {
         Competition competition = competitionMapper.toEntity(dto);
         Competition savedCompetition = competitionRepository.save(competition);
         return competitionMapper.toDto(savedCompetition);
     }
     @Override
-    public CompetitionResponseDto update(Long id, CompetitionRequestDTO competitionRequestDTO) {
+    public CompetitionResponseDTO update(Long id, CompetitionRequestDTO competitionRequestDTO) {
         Competition competition = competitionRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Competition with ID " + id + " not found."));
 

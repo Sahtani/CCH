@@ -64,7 +64,7 @@ public class CyclistServiceImpl implements CyclistService {
             existingCyclist.setAge(cyclistRequestDTO.age());
             existingCyclist.setNationality(cyclistRequestDTO.nationality());
 
-            Team team = teamRepository.findById(cyclistRequestDTO.teamId()).orElseThrow(() -> new EntityNotFoundException("Team" ,cyclistRequestDTO.teamId());
+            Team team = teamRepository.findById(cyclistRequestDTO.teamId()).orElseThrow(() -> new EntityNotFoundException("Team" ,cyclistRequestDTO.teamId()));
 
             existingCyclist.setTeam(team);
 
