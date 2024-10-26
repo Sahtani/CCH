@@ -7,4 +7,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface GeneralResultRepository extends JpaRepository<GeneralResult, GeneralResultId> {
+
+    void deleteByCompetitionIdAndCyclistId(Long competitionId, Long cyclistId);
 }
