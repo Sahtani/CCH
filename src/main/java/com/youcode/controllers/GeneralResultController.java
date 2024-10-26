@@ -20,22 +20,21 @@ public class GeneralResultController {
 
     @GetMapping
     public ResponseEntity<List<GeneralResultResponseDTO>> getAllGeneralResults() {
-        return ResponseEntity.ok(service.getAll());
+        return ResponseEntity.ok(service.findAll());
     }
 
     @GetMapping("/{competitionId}/{cyclistId}")
     public ResponseEntity<GeneralResultResponseDTO> getById(
             @PathVariable Long competitionId,
             @PathVariable Long cyclistId) {
-        return service.getById(competitionId, cyclistId)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        GeneralResultResponseDTO result = service.findByCompetitionIdAndCyclistId(competitionId, cyclistId)
+             return ResponseEntity.ok(result);
     }
 
     @PostMapping
     public ResponseEntity<GeneralResultResponseDTO> create(
             @RequestBody @Valid GeneralResultRequestDTO dto) {
-        GeneralResultResponseDTO created = service.save(dto);
+        GeneralResultResponseDTO created = service.subscribeToCompetition(dto);
         return new ResponseEntity<>(created, HttpStatus.CREATED);
     }
 
