@@ -40,8 +40,7 @@ public class GeneralResultServiceImpl implements GeneralResultService {
         return generalResultRepository.findById(generalResultId)
                 .map(generalResultMapper::toDto)
                 .orElseThrow(() -> new EntityNotFoundException(
-                        "GeneralResult for competitionId " + competitionId +
-                                " and cyclistId " + cyclistId + " not found"));
+                        "General Result ", generalResultId));
     }
 
     @Override

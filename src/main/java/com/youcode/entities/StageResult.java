@@ -36,4 +36,8 @@ public class StageResult {
     @MapsId("stageId")
     @ManyToOne
     private Stage stage;
+
+    public StageResult(Cyclist cyclist, Stage stage, Duration duration) {
+
+    }
 }

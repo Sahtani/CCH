@@ -27,7 +27,7 @@ public class GeneralResultController {
     public ResponseEntity<GeneralResultResponseDTO> getById(
             @PathVariable Long competitionId,
             @PathVariable Long cyclistId) {
-        GeneralResultResponseDTO result = service.findByCompetitionIdAndCyclistId(competitionId, cyclistId)
+        GeneralResultResponseDTO result = service.findByCompetitionIdAndCyclistId(competitionId, cyclistId);
              return ResponseEntity.ok(result);
     }
 
