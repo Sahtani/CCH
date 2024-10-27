@@ -60,6 +60,11 @@ public class StageResultServiceImpl implements StageResultService {
         if (!isCyclistJoinedCompetition(cyclist, stage)) {
             throw new CyclistNotSubscribeCompetitionException( "The cyclist is not subscribed to this competition.");
         }
+        if (stage.isCompleted()) {
+            throw new StageClosedException("The stage you are trying to access has already been completed and is closed for further updates.");
+        }
+
+
         StageResult savedResult = stageResultRepository.save(
                 new StageResult(cyclist, stage, stageResultRequestDTO.duration(),stageResultRequestDTO.rank())
         );
@@ -69,12 +74,19 @@ public class StageResultServiceImpl implements StageResultService {
     @Override
     public void delete(Long stageId, Long cyclistId) {
         StageResultId stageResultId = new StageResultId(stageId, cyclistId);
-        if (!stageResultRepository.existsById(stageResultId))
-            throw new EntityNotFoundException("stage result",stageResultId);
-//        if (!stageRepository.isStageClosed(stageId))
-//            throw new StageClosedException("the stage you are trying to delete is closed");
-        stageResultRepository.deleteByStageAndCyclist(stageId, cyclistId);
+
+        if (!stageResultRepository.existsById(stageResultId)) {
+            throw new EntityNotFoundException("Stage result not found for the given stage and cyclist ID: " + stageResultId);
+        }
+
+        if (stageRepository.isStageClosed(stageId)) {
+            throw new StageClosedException("The stage is already closed, and the result cannot be deleted.");
+        }
+
+        // Delete the StageResult
+        stageResultRepository.deleteById(stageResultId);
     }
+
     private boolean isCyclistJoinedCompetition(Cyclist cyclist, Stage stage) {
         return cyclist.getGeneralResults().stream()
                 .map(GeneralResult::getCompetition)
