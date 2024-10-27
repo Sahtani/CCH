@@ -34,6 +34,8 @@ public class Stage extends BaseEntity {
     @Column(nullable = false)
     private String type;
 
+    private boolean completed;
+
     @ManyToOne(fetch = FetchType.EAGER)
     private Competition competition;
 

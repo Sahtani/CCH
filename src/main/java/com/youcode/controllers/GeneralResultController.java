@@ -28,12 +28,11 @@ public class GeneralResultController {
             @PathVariable Long competitionId,
             @PathVariable Long cyclistId) {
         GeneralResultResponseDTO result = service.findByCompetitionIdAndCyclistId(competitionId, cyclistId);
-             return ResponseEntity.ok(result);
+        return ResponseEntity.ok(result);
     }
 
     @PostMapping
-    public ResponseEntity<GeneralResultResponseDTO> create(
-            @RequestBody @Valid GeneralResultRequestDTO dto) {
+    public ResponseEntity<GeneralResultResponseDTO> create(@RequestBody @Valid GeneralResultRequestDTO dto) {
         GeneralResultResponseDTO created = service.subscribeToCompetition(dto);
         return new ResponseEntity<>(created, HttpStatus.CREATED);
     }

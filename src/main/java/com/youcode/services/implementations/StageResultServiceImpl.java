@@ -2,6 +2,7 @@ package com.youcode.services.implementations;
 
 import com.youcode.common.exceptions.CyclistNotSubscribeCompetitionException;
 import com.youcode.common.exceptions.EntityNotFoundException;
+import com.youcode.common.exceptions.StageClosedException;
 import com.youcode.dtos.request.StageResultRequestDTO;
 import com.youcode.dtos.response.StageResultResponseDTO;
 import com.youcode.embedded.StageResultId;
@@ -14,14 +15,18 @@ import com.youcode.repositories.CyclistRepository;
 import com.youcode.repositories.StageRepositroy;
 import com.youcode.repositories.StageResultRepository;
 import com.youcode.services.api.StageResultService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
+@Validated
 public class StageResultServiceImpl implements StageResultService {
 
     private final StageResultRepository stageResultRepository;
@@ -56,14 +61,19 @@ public class StageResultServiceImpl implements StageResultService {
             throw new CyclistNotSubscribeCompetitionException( "The cyclist is not subscribed to this competition.");
         }
         StageResult savedResult = stageResultRepository.save(
-                new StageResult(cyclist, stage, stageResultRequestDTO.duration())
+                new StageResult(cyclist, stage, stageResultRequestDTO.duration(),stageResultRequestDTO.rank())
         );
         return stageResultMapper.toDto(savedResult);
     }
 
     @Override
     public void delete(Long stageId, Long cyclistId) {
-
+        StageResultId stageResultId = new StageResultId(stageId, cyclistId);
+        if (!stageResultRepository.existsById(stageResultId))
+            throw new EntityNotFoundException("stage result",stageResultId);
+//        if (!stageRepository.isStageClosed(stageId))
+//            throw new StageClosedException("the stage you are trying to delete is closed");
+        stageResultRepository.deleteByStageAndCyclist(stageId, cyclistId);
     }
     private boolean isCyclistJoinedCompetition(Cyclist cyclist, Stage stage) {
         return cyclist.getGeneralResults().stream()

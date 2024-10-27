@@ -37,7 +37,12 @@ public class StageResult {
     @ManyToOne
     private Stage stage;
 
-    public StageResult(Cyclist cyclist, Stage stage, Duration duration) {
+    public StageResult(Cyclist cyclist, Stage stage, Duration duration, Integer rank) {
+        this.id = new StageResultId(cyclist.getId(), stage.getId());
+        this.cyclist = cyclist;
+        this.stage = stage;
+        this.duration = duration;
+        this.rank = rank;
 
     }
 }

@@ -27,6 +27,8 @@ public class Competition extends BaseEntity {
     @NotNull
     private LocalDate startDate;
 
+    private boolean closed;
+
     @NotNull
     private LocalDate endDate;
 
