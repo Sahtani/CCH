@@ -2,7 +2,6 @@ package com.youcode.services.implementations;
 
 import com.youcode.common.exceptions.CyclistNotSubscribeCompetitionException;
 import com.youcode.common.exceptions.EntityNotFoundException;
-import com.youcode.common.exceptions.StageClosedException;
 import com.youcode.dtos.request.StageResultRequestDTO;
 import com.youcode.dtos.response.StageResultResponseDTO;
 import com.youcode.embedded.StageResultId;

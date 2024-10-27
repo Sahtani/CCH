@@ -20,11 +20,9 @@ public class GeneralResult {
 
     @EmbeddedId
     private GeneralResultId id;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("competitionId")
     private Competition competition;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("cyclistId")
     private Cyclist cyclist;
@@ -33,4 +31,9 @@ public class GeneralResult {
     @Column(name = "general_rank")
     private Integer generalRank;
 
+    public GeneralResult(Competition competition, Cyclist cyclist) {
+        this.id = new GeneralResultId(cyclist.getId(), competition.getId());
+        this.competition = competition;
+        this.cyclist = cyclist;
+    }
 }

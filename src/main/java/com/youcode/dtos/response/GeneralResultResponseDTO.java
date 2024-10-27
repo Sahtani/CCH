@@ -5,7 +5,5 @@ import java.time.Duration;
 
 public record GeneralResultResponseDTO(
         @NotNull CompetitionResponseDTO competition,
-        @NotNull CyclistResponseDTO cyclist,
-        @NotNull Duration generalTime,
-        @NotNull Integer generalRank
+        @NotNull CyclistResponseDTO cyclist
 ) {}
