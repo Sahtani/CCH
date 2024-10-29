@@ -1,5 +1,6 @@
 package com.youcode.services.implementations;
 
+import com.youcode.common.exceptions.CompetitionClosedException;
 import com.youcode.common.exceptions.EntityNotFoundException;
 import com.youcode.common.exceptions.ValidationException;
 import com.youcode.dtos.request.StageRequestDTO;
@@ -44,6 +45,9 @@ public class StageServiceImpl implements StageService {
         LocalDate stageDate = stageRequestDTO.date();
         if (!isDateWithinCompetitionRange(stageDate, competition)) {
             throw new ValidationException("Stage date must be between competition start date and end date.");
+        }
+        if(competition.isClosed()){
+            throw new CompetitionClosedException("Competition is closed.");
         }
         Stage stage = stageMapper.toEntity(stageRequestDTO);
         stage.setCompetition(competition);
