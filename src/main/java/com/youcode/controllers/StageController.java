@@ -44,4 +44,9 @@ public class StageController {
         stageService.delete(id);
         return ResponseEntity.noContent().build();
     }
+    @PutMapping("/update-status/{id}")
+    public ResponseEntity<StageResponseDTO> toggleClosed(@PathVariable Long id) {
+        StageResponseDTO stage = stageService.updateStatus(id);
+        return ResponseEntity.ok(stage);
+    }
 }

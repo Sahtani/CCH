@@ -22,7 +22,6 @@ public class Cyclist extends BaseEntity {
 
     @NotNull
     @Positive
-    @Adult
     private Integer age;
 
     @NotBlank

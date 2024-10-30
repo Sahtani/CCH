@@ -2,7 +2,6 @@ package com.youcode.controllers;
 
 import com.youcode.dtos.request.TeamRequestDTO;
 import com.youcode.dtos.response.TeamResponseDTO;
-import com.youcode.entities.Team;
 import com.youcode.services.api.TeamService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -43,13 +42,16 @@ public class TeamController {
     @PutMapping("/{id}")
     public ResponseEntity<TeamResponseDTO> updateTeam(@PathVariable Long id, @RequestBody TeamRequestDTO teamRequestDTO) {
 
+        TeamResponseDTO updatedTeam;
         if (teamService.getById(id).isPresent()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(null);
-        }
+            updatedTeam = teamService.update(id, teamRequestDTO);
+            return new ResponseEntity<>(updatedTeam, HttpStatus.OK);
 
-        TeamResponseDTO updatedTeam = teamService.update(id, teamRequestDTO);
-        return new ResponseEntity<>(updatedTeam, HttpStatus.OK);
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(null);
+
+
     }
 
     @DeleteMapping("/{id}")

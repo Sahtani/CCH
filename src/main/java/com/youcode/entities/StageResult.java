@@ -22,7 +22,6 @@ public class StageResult {
     @EmbeddedId
     private StageResultId id;
 
-    @NotNull
     @Positive
     private Integer rank;
 
@@ -37,12 +36,11 @@ public class StageResult {
     @ManyToOne
     private Stage stage;
 
-    public StageResult(Cyclist cyclist, Stage stage, Duration duration, Integer rank) {
+    public StageResult(Cyclist cyclist, Stage stage, Duration duration) {
         this.id = new StageResultId(cyclist.getId(), stage.getId());
         this.cyclist = cyclist;
         this.stage = stage;
         this.duration = duration;
-        this.rank = rank;
 
     }
 }

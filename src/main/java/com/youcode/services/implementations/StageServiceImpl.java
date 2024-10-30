@@ -77,6 +77,15 @@ public class StageServiceImpl implements StageService {
 
     }
 
+    @Override
+    public StageResponseDTO updateStatus(Long id) {
+        final Stage stage = stageRepo.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("stage", id));
+
+        stage.setCompleted(! stage.isCompleted());
+        return stageMapper.toDto(stage);
+    }
+
     private boolean isDateWithinCompetitionRange(LocalDate stageDate, Competition competition) {
         return !stageDate.isBefore(competition.getStartDate()) && !stageDate.isAfter(competition.getEndDate());
 
@@ -85,4 +94,5 @@ public class StageServiceImpl implements StageService {
         return competitionRepo.findById(competitionId)
                 .orElseThrow(() -> new EntityNotFoundException("Competition" ,competitionId));
     }
+
 }

@@ -15,7 +15,6 @@ import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -42,13 +41,13 @@ public class TeamServiceImpl implements TeamService {
         Team team = teamRepository.findById(teamId)
                 .orElseThrow(() -> new IllegalArgumentException("Team not found."));
 
-        Set<CyclistResponseDTO> cyclistDTOs = team.getCyclists()
+        List<CyclistResponseDTO> cyclistDTOs = team.getCyclists()
                 .stream()
                 .map(cyclistMapper::toDto)
-                .collect(Collectors.toSet());
-
-        return Optional.of(new TeamResponseDTO(team.getId(), team.getName()));
+                .collect(Collectors.toList());
+        return Optional.ofNullable(teamMapper.toDto(team));
     }
+
 
     @Override
     public void delete(Long id) {
@@ -66,7 +65,7 @@ public class TeamServiceImpl implements TeamService {
         Team team = new Team();
         team.setName(dto.name());
         Team savedTeam = teamRepository.save(team);
-        return new TeamResponseDTO(savedTeam.getId(), savedTeam.getName());
+        return teamMapper.toDto(savedTeam);
     }
 
     @Override

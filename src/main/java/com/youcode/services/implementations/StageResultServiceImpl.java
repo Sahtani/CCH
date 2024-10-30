@@ -66,7 +66,7 @@ public class StageResultServiceImpl implements StageResultService {
 
 
         StageResult savedResult = stageResultRepository.save(
-                new StageResult(cyclist, stage, stageResultRequestDTO.duration(),stageResultRequestDTO.rank())
+                new StageResult(cyclist, stage, stageResultRequestDTO.duration())
         );
         return stageResultMapper.toDto(savedResult);
     }
@@ -83,8 +83,7 @@ public class StageResultServiceImpl implements StageResultService {
             throw new StageClosedException("The stage is already closed, and the result cannot be deleted.");
         }
 
-        // Delete the StageResult
-        stageResultRepository.deleteById(stageResultId);
+        stageResultRepository.deleteByStageAndCyclist(stageId,cyclistId);
     }
 
     private boolean isCyclistJoinedCompetition(Cyclist cyclist, Stage stage) {

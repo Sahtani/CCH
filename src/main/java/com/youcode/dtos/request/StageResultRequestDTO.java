@@ -13,11 +13,6 @@ public record StageResultRequestDTO(
         @NotNull
         @Positive
         Long stageId,
-
-        @NotNull
-        @Positive
-        Integer rank,
-
         @NotNull
         Duration duration
 ) {}
