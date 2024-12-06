@@ -1,2 +1,2 @@
 # CCH
-CCH est une application qui doit permettre la gestion des courses contre la montre de cyclisme, organisées par le Cyclo Club Horizon, un club dédié à la promotion des compétitions cyclistes. Chaque coureur concourt individuellement pour réaliser le meilleur temps sur un parcours donné.
+CCH is an application designed to manage time trial cycling events organized by the Cyclo Club Horizon, a club dedicated to promoting cycling competitions. Each rider competes individually to achieve the best time on a given course.
