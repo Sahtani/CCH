@@ -49,13 +49,13 @@ public class GeneralResultServiceImpl implements GeneralResultService {
     @Override
     public GeneralResultResponseDTO subscribeToCompetition(GeneralResultRequestDTO dto) {
 
-        Optional<Cyclist> cyclist = Optional.ofNullable(cyclistRepository.findById(dto.cyclistId())
-                .orElseThrow(() -> new EntityNotFoundException("cyclist", dto.cyclistId())));
-        Optional<Competition> competition = Optional.ofNullable(competitionRepository.findById(dto.competitionId())
-                .orElseThrow(() -> new EntityNotFoundException("competition ", dto.competitionId())));
+       Cyclist cyclist = cyclistRepository.findById(dto.cyclistId())
+                .orElseThrow(() -> new EntityNotFoundException("cyclist", dto.cyclistId()));
+        Competition competition = competitionRepository.findById(dto.competitionId())
+                .orElseThrow(() -> new EntityNotFoundException("competition ", dto.competitionId()));
 
 
-        GeneralResult generalResult = new GeneralResult(competition.get(), cyclist.get());
+        GeneralResult generalResult = new GeneralResult(competition, cyclist);
         GeneralResult savedResult = generalResultRepository.save(generalResult);
         return generalResultMapper.toDto(savedResult);
 
